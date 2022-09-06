@@ -27,7 +27,7 @@ func main() {
 			intersight.HttpHeaderHost,
 			intersight.HttpHeaderDate,
 			intersight.HttpHeaderDigest,
-			"Content-Type"
+			"Content-Type",
 		},
 		SigningAlgorithm: intersight.HttpSigningAlgorithmRsaPKCS1v15,
 	}
