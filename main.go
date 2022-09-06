@@ -13,7 +13,6 @@ func main() {
 	keyFile := "API_KEY_PATH"
 	host := "TARGET_SERVER"
 
-	fmt.Println(keyID, keyFile, host)
 
 	config := intersight.NewConfiguration()
 	config.Host = host
