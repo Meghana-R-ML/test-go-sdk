@@ -10,9 +10,9 @@ import (
 )
 
 func main() {
-	keyID := os.Getenv("IS_KEY_ID")
-	keyFile := os.Getenv("IS_KEY_FILE")
-	host := os.Getenv("HOST")
+	keyID := "API_KEY_ID"
+	keyFile := os.Getenv("API_KEY_PATH")
+	host := os.Getenv("TARGET_SERVER")
 	fmt.Println(keyID, keyFile, host)
 
 	config := intersight.NewConfiguration()
