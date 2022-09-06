@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/CiscoDevNet/intersight-go"
+	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
 func main() {
