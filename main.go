@@ -10,8 +10,8 @@ import (
 )
 
 func main() {
-	keyID := os.Getenv("API_KEY_ID")
-	keyFile := os.Getenv("API_KEY_FILE")
+	keyID := os.Getenv("SECRET_KEY")
+	keyFile := os.Getenv("SECRET_FILE")
 
 	config := intersight.NewConfiguration()
 
