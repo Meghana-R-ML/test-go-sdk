@@ -12,8 +12,11 @@ import (
 func main() {
 	keyID := os.Getenv("IS_KEY_ID")
 	keyFile := os.Getenv("IS_KEY_FILE")
+	host := os.Getenv("HOST")
+	fmt.Println(keyID, keyFile, host)
 
 	config := intersight.NewConfiguration()
+	config.Host = host
 
 	// Uncomment this line if you want to see the Intersight API requests/responses
 	config.Debug = true
