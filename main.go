@@ -38,8 +38,8 @@ func main() {
 	// Get a context that includes the authentication config
 	authCtx, err := authConfig.ContextWithValue(context.Background())
 	if err != nil {
-		log.Fatal("Error creating authentication context")
 		fmt.Println(err)
+		log.Fatal("Error creating authentication context")
 	}
 
 	// Execute the GetNtpPolicyList operation
