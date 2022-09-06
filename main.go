@@ -15,8 +15,8 @@ func main() {
 
 	config := intersight.NewConfiguration()
 
-	// Uncomment this line if you want to see the Intersight API requests/responses
-	// config.Debug = true
+	Uncomment this line if you want to see the Intersight API requests/responses
+	config.Debug = true
 
 	client := intersight.NewAPIClient(config)
 
