@@ -14,44 +14,43 @@ func main() {
 	host := "TARGET_SERVER"
 
 
-	config := intersight.NewConfiguration()
-	config.Host = host
-
-	// Uncomment this line if you want to see the Intersight API requests/responses
-	config.Debug = true
-
-	client := intersight.NewAPIClient(config)
-
 	// Set up the authentication configuration struct
-	authConfig := intersight.HttpSignatureAuth{
+	authCfg := intersight.HttpSignatureAuth{
 		KeyId:          keyID,
 		PrivateKeyPath: keyFile,
 
 		SigningScheme: intersight.HttpSigningSchemeRsaSha256,
 		SignedHeaders: []string{
-			intersight.HttpSignatureParameterRequestTarget, // The special (request-target) parameter expresses the HTTP request target.
-			"Host",   // The Host request header specifies the domain name of the server, and optionally the TCP port number.
-			"Date",   // The date and time at which the message was originated.
-			"Digest", // A cryptographic digest of the request body.
+			intersight.HttpSignatureParameterRequestTarget, 
+			intersight.HttpSignatureParameterCreated,
+			intersight.HttpSignatureParameterExpires,
+			intersight.HttpHeaderHost,
+			intersight.HttpHeaderDate,
+			intersight.HttpHeaderDigest,
+			"Content-Type"
 		},
 		SigningAlgorithm: intersight.HttpSigningAlgorithmRsaPKCS1v15,
 	}
 
-	// Get a context that includes the authentication config
-	authCtx, err := authConfig.ContextWithValue(context.Background())
+
+	ctx, err := authCfg.ContextWithValue(context.Background())
 	if err != nil {
 		fmt.Println(err)
 		log.Fatal("Error creating authentication context")
 	}
 
-	// Execute the GetNtpPolicyList operation
-	res, _, err := client.NtpApi.GetNtpPolicyList(authCtx).Execute()
+        config := intersight.NewConfiguration()
+        config.Host = host
+        config.Debug = true
+
+        client := intersight.NewAPIClient(config)
+
+	res, _, err := client.SnmpApi.GetSnmpPolicyList(ctx).Execute()
 	if err != nil {
-		log.Fatalf("Error getting NTP policy list: %v", err)
+		log.Fatalf("Error getting SNMP policies: %v", err)
 	}
 
-	// Loop through the NtpPolicy list and print the names
-	for _, ntpPolicy := range res.NtpPolicyList.Results {
-		fmt.Printf("Ntp Policy: %s\n", *ntpPolicy.Name)
+	for _, snmpPolicy := range res.SnmpPolicyList.Results {
+		fmt.Printf("Snmp Policy: %s\n", *snmpPolicy.Name)
 	}
 }
