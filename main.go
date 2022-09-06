@@ -22,12 +22,9 @@ func main() {
 		SigningScheme: intersight.HttpSigningSchemeRsaSha256,
 		SignedHeaders: []string{
 			intersight.HttpSignatureParameterRequestTarget, 
-			intersight.HttpSignatureParameterCreated,
-			intersight.HttpSignatureParameterExpires,
-			intersight.HttpHeaderHost,
-			intersight.HttpHeaderDate,
-			intersight.HttpHeaderDigest,
-			"Content-Type",
+			"Host",
+			"Date",
+			"Digest",
 		},
 		SigningAlgorithm: intersight.HttpSigningAlgorithmRsaPKCS1v15,
 	}
