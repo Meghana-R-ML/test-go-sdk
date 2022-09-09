@@ -24,11 +24,15 @@ import (
 
 func createBootLocalCdd() *intersight.BootDeviceBase {
 	bootLocalCdd := intersight.NewBootDeviceBase("boot.LocalCdd", "boot.LocalCdd")
+	bootLocalCdd.SetName("local_cdd1")
+	bootLocalCdd.SetEnabled(true)
 	return bootLocalCdd
 }
 
 func createBootLocalDisk() *intersight.BootDeviceBase {
 	bootLocalDisk := intersight.NewBootDeviceBase("boot.LocalDisk", "boot.LocalDisk")
+	bootLocalDisk.SetName("local_disk1")
+	bootLocalDisk.SetEnabled(true)
 	return bootLocalDisk
 }
 
@@ -88,7 +92,7 @@ func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
 	// 	return
 	// }
 
-	ApiClient, err := getApiClient(apiKeyId, apiSecret, endpoint)
+	apiClient, err := getApiClient(apiKeyId, apiSecret, endpoint)
 	if err != nil {
 		fmt.Println("Error", err)
 		return
@@ -99,17 +103,20 @@ func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
 	organization := createOrganization()
 	bootDevices := []intersight.BootDeviceBase{*bootLocalDisk, *bootLocalCdd}
 	bootPrecisionPolicy := intersight.NewBootPrecisionPolicyWithDefaults()
-	bootPrecisionPolicy.SetName("sample_boot_policy1")
-	bootPrecisionPolicy.SetDescription("sample boot precision policy")
+	bootPrecisionPolicy.PolicyAbstractPolicy.SetName("sample_boot_policy1")
+	bootPrecisionPolicy.PolicyAbstractPolicy.SetDescription("sample boot precision policy")
 	bootPrecisionPolicy.SetBootDevices(bootDevices)
 	bootPrecisionPolicy.SetOrganization(organization)
-	apiClient := ApiClient
+// 	apiClient := ApiClient
 	ifMatch := ""
 	ifNoneMatch := ""
 	resp, r, err := apiClient.BootApi.CreateBootPrecisionPolicy(context.Background()).BootPrecisionPolicy(*bootPrecisionPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
-		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
+// 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
+		log.Printf("Error: %v\n", err)
+		log.Printf("HTTP response: %v\n", r)
+		return
 	}
 	fmt.Fprintf(os.Stdout, "Response: %v\n", resp)
 
@@ -117,8 +124,11 @@ func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
 	id := resp.GetMoid()
 	getapiResponse, r, err := apiClient.BootApi.GetBootPrecisionPolicyByMoid(context.Background(), id).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error -> GetBootPrecisionPolicyByMoid: %v\n", err)
-		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
+// 		fmt.Fprintf(os.Stderr, "Error -> GetBootPrecisionPolicyByMoid: %v\n", err)
+// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
+		log.Printf("Error -> GetBootPrecisionPolicyByMoid: %v\n", err)
+		log.Printf("HTTP response: %v\n", r)
+		return
 	}
 	objMoid := getapiResponse.GetMoid()
 	organizationMoid := getapiResponse.GetOrganization().MoMoRef.GetMoid()
@@ -133,8 +143,11 @@ func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
 	updatebootPrecisionPolicy.SetOrganization(organization1)
 	updateResp, r, err := apiClient.BootApi.UpdateBootPrecisionPolicy(context.Background(), objMoid).BootPrecisionPolicy(*updatebootPrecisionPolicy).IfMatch(ifMatch).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error -> UpdateBootPrecisionPolicy: %v\n", err)
-		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
+// 		fmt.Fprintf(os.Stderr, "Error -> UpdateBootPrecisionPolicy: %v\n", err)
+// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
+		log.Printf("Error -> UpdateBootPrecisionPolicy: %v\n", err)
+		log.Printf("HTTP response: %v\n", r)
+		return
 	}
 	fmt.Fprintf(os.Stdout, "Response : %v\n", updateResp)
 
@@ -148,16 +161,22 @@ func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
 	patchbootPrecisionPolicy.SetOrganization(organization1)
 	patchResp, r, err := apiClient.BootApi.PatchBootPrecisionPolicy(context.Background(), objMoid).BootPrecisionPolicy(*patchbootPrecisionPolicy).IfMatch(ifMatch).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error -> PatchBootPrecisionPolicy: %v\n", err)
-		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
+// 		fmt.Fprintf(os.Stderr, "Error -> PatchBootPrecisionPolicy: %v\n", err)
+// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
+		log.Printf("Error -> PatchBootPrecisionPolicy: %v\n", err)
+		log.Printf("HTTP response: %v\n", r)
+		return
 	}
 	fmt.Fprintf(os.Stdout, "Response : %v\n", patchResp)
 
 	//Delete
 	fullResp, err := apiClient.BootApi.DeleteBootPrecisionPolicy(context.Background(), objMoid).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error -> DeleteBootPrecisionPolicy: %v\n", err)
-		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", fullResp)
+// 		fmt.Fprintf(os.Stderr, "Error -> DeleteBootPrecisionPolicy: %v\n", err)
+// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", fullResp)
+		log.Printf("Error -> DeleteBootPrecisionPolicy: %v\n", err)
+		log.Printf("HTTP response: %v\n", fullResp)
+		return
 	}
 
 }
