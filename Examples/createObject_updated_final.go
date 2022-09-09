@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-
+	"log"
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
@@ -94,7 +94,7 @@ func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
 
 	apiClient, err := getApiClient(apiKeyId, apiSecret, endpoint)
 	if err != nil {
-		fmt.Println("Error", err)
+		log.Printf("Error", err)
 		return
 	}
 
