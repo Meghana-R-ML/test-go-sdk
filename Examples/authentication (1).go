@@ -28,12 +28,12 @@ func SetInputs(apiKeyId string, apiSecretFile string, endpoint string) (context.
 	httpSigningInfo.SigningScheme = intersight.HttpSigningSchemeRsaSha256
 	httpSigningInfo.SigningAlgorithm = intersight.HttpSigningAlgorithmRsaPKCS1v15
 	httpSigningInfo.SignedHeaders = []string{intersight.HttpSignatureParameterRequestTarget,
-		intersight.HttpSignatureParameterCreated,
-		intersight.HttpSignatureParameterExpires,
-		intersight.HttpHeaderHost,
-		intersight.HttpHeaderDate,
-		intersight.HttpHeaderDigest,
-		"Content-Type"}
+// 		intersight.HttpSignatureParameterCreated,
+// 		intersight.HttpSignatureParameterExpires,
+		"Host",
+		"Date",
+		"Digest",
+		}
 	if _, err := os.Stat(apiSecretFile); err != nil {
 		err = httpSigningInfo.SetPrivateKey(apiSecretFile)
 		if err != nil {
