@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 	"log"
+	"fmt"
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
@@ -43,10 +44,14 @@ func SetInputs(apiKeyId string, apiSecretFile string, endpoint string) (context.
 	}
 
 	ctx, err := httpSigningInfo.ContextWithValue(ctx)
-	_, err = httpSigningInfo.GetPublicKey()
 	if err != nil {
-		return nil, err
+		fmt.Println(err)
+		log.Fatal("Error creating authentication context")
 	}
+// 	_, err = httpSigningInfo.GetPublicKey()
+// 	if err != nil {
+// 		return nil, err
+// 	}
 	return ctx, err
 }
 
