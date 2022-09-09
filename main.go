@@ -4,7 +4,7 @@ import (
 // 	"context"
 // 	"fmt"
 // 	"log"
-	example "main/Examples"
+	example "test-go-sdk/Examples"
 // 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
