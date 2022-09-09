@@ -65,7 +65,7 @@ func getApiClient(apiKeyId string, apiSecretFile string, endpoint string) (*inte
 
 	ctx, err := SetInputs(config.ApiKey, config.SecretKey, config.Endpoint)
 	if err!=nil{
-		log.Fatal(err)
+		log.Fatalf("Error: %v",err)
 		}
 	config.ctx = ctx
 	cfg := intersight.NewConfiguration()
