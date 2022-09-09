@@ -3,7 +3,7 @@ package example
 import (
 	"context"
 	"os"
-
+	"log"
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
@@ -59,9 +59,9 @@ func getApiClient(apiKeyId string, apiSecretFile string, endpoint string) (*inte
 	}
 
 	ctx, err := SetInputs(config.ApiKey, config.SecretKey, config.Endpoint)
-	// if err!=nil{
-	// 	return nil,err
-	// 	}
+	if err!=nil{
+		log.Fatal(err)
+		}
 	config.ctx = ctx
 	cfg := intersight.NewConfiguration()
 	// cfg.Host = endpoint
