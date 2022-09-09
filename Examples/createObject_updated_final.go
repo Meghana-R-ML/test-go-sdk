@@ -103,8 +103,8 @@ func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
 	organization := createOrganization()
 	bootDevices := []intersight.BootDeviceBase{*bootLocalDisk, *bootLocalCdd}
 	bootPrecisionPolicy := intersight.NewBootPrecisionPolicyWithDefaults()
-	bootPrecisionPolicy.PolicyAbstractPolicy.SetName("sample_boot_policy1")
-	bootPrecisionPolicy.PolicyAbstractPolicy.SetDescription("sample boot precision policy")
+	bootPrecisionPolicy.SetName("sample_boot_policy1")
+	bootPrecisionPolicy.SetDescription("sample boot precision policy")
 	bootPrecisionPolicy.SetBootDevices(bootDevices)
 	bootPrecisionPolicy.SetOrganization(organization)
 // 	apiClient := ApiClient
@@ -137,8 +137,8 @@ func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
 	organization1 := createOrganizationWithMoid(organizationMoid)
 	bootDevices1 := []intersight.BootDeviceBase{*bootSdcard, *bootIscsi}
 	updatebootPrecisionPolicy := intersight.NewBootPrecisionPolicyWithDefaults()
-	updatebootPrecisionPolicy.PolicyAbstractPolicy.SetName("updated_boot_precision_policy_for_go_test")
-	updatebootPrecisionPolicy.PolicyAbstractPolicy.SetDescription("updated description of boot precision policy for testing go example")
+	updatebootPrecisionPolicy.SetName("updated_boot_precision_policy_for_go_test")
+	updatebootPrecisionPolicy.SetDescription("updated description of boot precision policy for testing go example")
 	updatebootPrecisionPolicy.SetBootDevices(bootDevices1)
 	updatebootPrecisionPolicy.SetOrganization(organization1)
 	updateResp, r, err := apiClient.BootApi.UpdateBootPrecisionPolicy(context.Background(), objMoid).BootPrecisionPolicy(*updatebootPrecisionPolicy).IfMatch(ifMatch).Execute()
@@ -155,8 +155,8 @@ func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
 	bootVirtualMedia := createBootVirtualMedia()
 	bootDevices2 := []intersight.BootDeviceBase{*bootVirtualMedia}
 	patchbootPrecisionPolicy := intersight.NewBootPrecisionPolicyWithDefaults()
-	patchbootPrecisionPolicy.PolicyAbstractPolicy.SetName("updated_boot_precision_policy_using_patch_go_test")
-	patchbootPrecisionPolicy.PolicyAbstractPolicy.SetDescription("update the description of boot precision policy with patch for go test")
+	patchbootPrecisionPolicy.SetName("updated_boot_precision_policy_using_patch_go_test")
+	patchbootPrecisionPolicy.SetDescription("update the description of boot precision policy with patch for go test")
 	patchbootPrecisionPolicy.SetBootDevices(bootDevices2)
 	patchbootPrecisionPolicy.SetOrganization(organization1)
 	patchResp, r, err := apiClient.BootApi.PatchBootPrecisionPolicy(context.Background(), objMoid).BootPrecisionPolicy(*patchbootPrecisionPolicy).IfMatch(ifMatch).Execute()
