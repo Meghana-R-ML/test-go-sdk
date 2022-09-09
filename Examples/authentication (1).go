@@ -64,7 +64,8 @@ func getApiClient(apiKeyId string, apiSecretFile string, endpoint string) (*inte
 		}
 	config.ctx = ctx
 	cfg := intersight.NewConfiguration()
-	// cfg.Host = endpoint
+	cfg.Host = endpoint
+	cfg.Debug = true
 	apiClient := intersight.NewAPIClient(cfg)
 	return apiClient, err
 }
