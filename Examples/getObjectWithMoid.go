@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
 func GetObjectWithMoid(config *Config) {
