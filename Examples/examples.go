@@ -13,7 +13,7 @@ type Config struct {
 	ctx       context.Context
 }
 
-func executeExamples(apiKey string, secret string, host string) {
+func ExecuteExamples(apiKey string, secret string, host string) {
 
 	config := Config{
 		ApiKey:    apiKey,
