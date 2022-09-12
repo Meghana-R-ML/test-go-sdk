@@ -22,7 +22,7 @@ func GetObjectListWithFilter(config *Config) {
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
 	ctx := cfg.ctx
-	apiResponse, r, err := apiClient.ComputeApi.GetComputeRackUnitList(ctx).Filter(filter).Orderby(orderby).Top(top).Skip(skip).Select_(select_).Apply(apply).Count(count).Inlinecount(inlinecount).Execute()
+	apiResponse, r, err := apiClient.ComputeApi.GetComputeRackUnitList(ctx).Filter(filter).Orderby(orderby).Top(top).Skip(skip).Select_(select_).Count(count).Inlinecount(inlinecount).Execute()
 	if err != nil {
 		// 		fmt.Fprintf(os.Stderr, "Error when calling `ComputeApi.GetComputeRckUnitList``: %v\n", err)
 		// 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
