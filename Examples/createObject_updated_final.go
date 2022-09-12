@@ -1,26 +1,12 @@
 package example
 
 import (
-	"context"
 	"fmt"
 	"os"
 	"log"
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
-// const (
-// 	apiKeyId      = ""
-// 	apiSecretFile = ""
-// 	endpoint      = ""
-// )
-
-// type Config struct {
-// 	ApiKey    string
-// 	SecretKey string
-// 	Endpoint  string
-// 	ApiClient *intersight.APIClient
-// 	ctx       context.Context
-// }
 
 func createBootLocalCdd() *intersight.BootDeviceBase {
 	bootLocalCdd := intersight.NewBootDeviceBase("boot.LocalCdd", "boot.LocalCdd")
@@ -74,30 +60,11 @@ func createOrganizationWithMoid(moid string) intersight.OrganizationOrganization
 	return organizationRelationship
 }
 
-func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
-	// config := Config{
-	// 	ApiKey:    apiKeyId,
-	// 	SecretKey: apiSecretFile,
-	// 	Endpoint:  endpoint,
-	// }
+func CreateObject(config *Config) {
 	var err error
-	// config.ctx, err = setInputs(apiKeyId, apiSecretFile, endpoint)
-	// if err != nil {
-	// 	fmt.Println("Unable to get APIClient: ", err)
-	// 	return
-	// }
-	// config.ApiClient,err= getApiClient(config.ctx)
-	// if err != nil {
-	// 	fmt.Println("Error", err)
-	// 	return
-	// }
-
-	apiClient, err := getApiClient(apiKeyId, apiSecret, endpoint)
-	if err != nil {
-		log.Printf("Error", err)
-		return
-	}
-
+	cfg := getApiClient(config)
+	apiClient := cfg.ApiClient
+	ctx := cfg.ctx
 	bootLocalCdd := createBootLocalCdd()
 	bootLocalDisk := createBootLocalDisk()
 	organization := createOrganization()
@@ -107,13 +74,13 @@ func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
 	bootPrecisionPolicy.SetDescription("sample boot precision policy")
 	bootPrecisionPolicy.SetBootDevices(bootDevices)
 	bootPrecisionPolicy.SetOrganization(organization)
-// 	apiClient := ApiClient
+
 	ifMatch := ""
 	ifNoneMatch := ""
-	resp, r, err := apiClient.BootApi.CreateBootPrecisionPolicy(context.Background()).BootPrecisionPolicy(*bootPrecisionPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	resp, r, err := apiClient.BootApi.CreateBootPrecisionPolicy(ctx).BootPrecisionPolicy(*bootPrecisionPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
-// 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
-// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
+		// 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
 		log.Printf("Error: %v\n", err)
 		log.Printf("HTTP response: %v\n", r)
 		return
@@ -122,10 +89,10 @@ func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
 
 	//Update
 	id := resp.GetMoid()
-	getapiResponse, r, err := apiClient.BootApi.GetBootPrecisionPolicyByMoid(context.Background(), id).Execute()
+	getapiResponse, r, err := apiClient.BootApi.GetBootPrecisionPolicyByMoid(ctx, id).Execute()
 	if err != nil {
-// 		fmt.Fprintf(os.Stderr, "Error -> GetBootPrecisionPolicyByMoid: %v\n", err)
-// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
+		// 		fmt.Fprintf(os.Stderr, "Error -> GetBootPrecisionPolicyByMoid: %v\n", err)
+		// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
 		log.Printf("Error -> GetBootPrecisionPolicyByMoid: %v\n", err)
 		log.Printf("HTTP response: %v\n", r)
 		return
@@ -141,10 +108,10 @@ func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
 	updatebootPrecisionPolicy.SetDescription("updated description of boot precision policy for testing go example")
 	updatebootPrecisionPolicy.SetBootDevices(bootDevices1)
 	updatebootPrecisionPolicy.SetOrganization(organization1)
-	updateResp, r, err := apiClient.BootApi.UpdateBootPrecisionPolicy(context.Background(), objMoid).BootPrecisionPolicy(*updatebootPrecisionPolicy).IfMatch(ifMatch).Execute()
+	updateResp, r, err := apiClient.BootApi.UpdateBootPrecisionPolicy(ctx, objMoid).BootPrecisionPolicy(*updatebootPrecisionPolicy).IfMatch(ifMatch).Execute()
 	if err != nil {
-// 		fmt.Fprintf(os.Stderr, "Error -> UpdateBootPrecisionPolicy: %v\n", err)
-// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
+		// 		fmt.Fprintf(os.Stderr, "Error -> UpdateBootPrecisionPolicy: %v\n", err)
+		// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
 		log.Printf("Error -> UpdateBootPrecisionPolicy: %v\n", err)
 		log.Printf("HTTP response: %v\n", r)
 		return
@@ -159,10 +126,10 @@ func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
 	patchbootPrecisionPolicy.SetDescription("update the description of boot precision policy with patch for go test")
 	patchbootPrecisionPolicy.SetBootDevices(bootDevices2)
 	patchbootPrecisionPolicy.SetOrganization(organization1)
-	patchResp, r, err := apiClient.BootApi.PatchBootPrecisionPolicy(context.Background(), objMoid).BootPrecisionPolicy(*patchbootPrecisionPolicy).IfMatch(ifMatch).Execute()
+	patchResp, r, err := apiClient.BootApi.PatchBootPrecisionPolicy(ctx, objMoid).BootPrecisionPolicy(*patchbootPrecisionPolicy).IfMatch(ifMatch).Execute()
 	if err != nil {
-// 		fmt.Fprintf(os.Stderr, "Error -> PatchBootPrecisionPolicy: %v\n", err)
-// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
+		// 		fmt.Fprintf(os.Stderr, "Error -> PatchBootPrecisionPolicy: %v\n", err)
+		// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
 		log.Printf("Error -> PatchBootPrecisionPolicy: %v\n", err)
 		log.Printf("HTTP response: %v\n", r)
 		return
@@ -170,10 +137,10 @@ func CreateObject(apiKeyId string, apiSecret string, endpoint string) {
 	fmt.Fprintf(os.Stdout, "Response : %v\n", patchResp)
 
 	//Delete
-	fullResp, err := apiClient.BootApi.DeleteBootPrecisionPolicy(context.Background(), objMoid).Execute()
+	fullResp, err := apiClient.BootApi.DeleteBootPrecisionPolicy(ctx, objMoid).Execute()
 	if err != nil {
-// 		fmt.Fprintf(os.Stderr, "Error -> DeleteBootPrecisionPolicy: %v\n", err)
-// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", fullResp)
+		// 		fmt.Fprintf(os.Stderr, "Error -> DeleteBootPrecisionPolicy: %v\n", err)
+		// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", fullResp)
 		log.Printf("Error -> DeleteBootPrecisionPolicy: %v\n", err)
 		log.Printf("HTTP response: %v\n", fullResp)
 		return
