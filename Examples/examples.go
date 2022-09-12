@@ -2,7 +2,7 @@ package example
 
 import (
 	"context"
-	//	intersight "github.com/CiscoDevNet/intersight-go"
+	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
 type Config struct {
