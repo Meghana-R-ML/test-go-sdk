@@ -49,15 +49,5 @@ func main() {
 	// 	fmt.Printf("Snmp Policy: %s\n", *snmpPolicy.Name)
 	// }
 
-	//invoking the CreateObject to create a new instance of the bootPrecisionPolicy
-	example.CreateObject(keyID, keyFile, host)
-
-	//invoke getObjectList to get list of smtp policy
-	example.GetObjectList(keyID, keyFile, host)
-
-	//invoke getOjectListWithFilter
-	example.GetObjectListWithFilter(keyID, keyFile, host)
-
-	//invoke GetObjectWithMoid to get list of smtp policy by moid
-	example.GetObjectWithMoid(keyID, keyFile, host)
+	example.executeExamples(keyID, keyFile, host)
 }
