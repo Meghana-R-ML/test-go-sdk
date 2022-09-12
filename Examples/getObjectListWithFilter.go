@@ -13,7 +13,7 @@ func GetObjectListWithFilter(config *Config) {
 	skip := int32(1)
 	select_ := "CreateTime,ModTime"
 	// 	expand := "Biosunits"
-	apply := "groupby((Model),aggregate(AvailableMemory with min as MinAvailableMemory))"
+	//	apply := "groupby((Model),aggregate(AvailableMemory with min as MinAvailableMemory))"
 	count := false
 	inlinecount := "allpages"
 	// 	at := "VersionType eq 'Configured'"
