@@ -49,5 +49,5 @@ func main() {
 	// 	fmt.Printf("Snmp Policy: %s\n", *snmpPolicy.Name)
 	// }
 
-	example.executeExamples(keyID, keyFile, host)
+	example.ExecuteExamples(keyID, keyFile, host)
 }
