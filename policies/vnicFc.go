@@ -119,9 +119,7 @@ func CreateVnicFcAdapterPolicy(config *Config) string {
 	adapterResp, r, err := apiClient.VnicApi.CreateVnicFcAdapterPolicy(ctx).VnicFcAdapterPolicy(*fcAdapterPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
-		log.Fatalf("HTTP response: %v\n", r)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", adapterResp)
 	adapterPolicyMoid = adapterResp.GetMoid()
 	return adapterPolicyMoid
 }
@@ -149,9 +147,7 @@ func CreateVnicFcNetworkPolicy(config *Config) string {
 	networkResp, r, err := apiClient.VnicApi.CreateVnicFcNetworkPolicy(ctx).VnicFcNetworkPolicy(*fcNetworkPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
-		log.Fatalf("HTTP response: %v\n", r)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", networkResp)
 	fcNetworkMoid = networkResp.GetMoid()
 	return fcNetworkMoid
 }
@@ -176,9 +172,7 @@ func CreateVnicFcQosPolicy(config *Config) string {
 	qosResp, r, err := apiClient.VnicApi.CreateVnicFcQosPolicy(ctx).VnicFcQosPolicy(*fcQosPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
-		log.Fatalf("HTTP response: %v\n", r)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", qosResp)
 	qosMoid = qosResp.GetMoid()
 	return qosMoid
 }
@@ -200,9 +194,7 @@ func CreateVnicSanConnectivityPolicy(config *Config) string {
 	sanResp, r, err := apiClient.VnicApi.CreateVnicSanConnectivityPolicy(ctx).VnicSanConnectivityPolicy(*sanConnectivityPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
-		log.Fatalf("HTTP response: %v\n", r)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", sanResp)
 	sanConnectivityMoid = sanResp.GetMoid()
 	return sanConnectivityMoid
 }

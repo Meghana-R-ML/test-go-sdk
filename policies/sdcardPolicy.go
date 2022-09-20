@@ -17,7 +17,8 @@ func setPartitions() *intersight.SdcardPartition {
 	partitions := intersight.NewSdcardPartitionWithDefaults()
 	partitions.SetType("OS")
 	partitions.SetObjectType("sdcard.Partition")
-	virtualDrives := createVirtualDrives()
+	virtualDrive := createVirtualDrives()
+	virtualDrives := []intersight.SdcardPartition{*virtualDrive}
 	partitions.SetVirtualDrives(virtualDrives)
 	return partitions
 }
@@ -29,11 +30,12 @@ func CreateSdCardPolicy(config *Config) string {
 	ctx := cfg.ctx
 	org_moid := getDefaultOrgMoid(config)
         organizationRelationship := getOrganizationRelationship(org_moid)
-	partitions := setPartitions()
+	partition := setPartitions()
 	sdCardPolicy := intersight.NewSdcardPolicyWithDefaults()
 	sdCardPolicy.SetName("tf_sdcard_sdk")
 	sdCardPolicy.SetDescription("test policy")
 	sdCardPolicy.SetOrganization(organizationRelationship)
+        partitions := []intersight.SdcardPartition{*partition}
 	sdCardPolicy.SetPartitions(partitions)
 	resp, r, err := apiClient.SdcardApi.CreateSdcardPolicy(ctx).SdcardPolicy(*sdCardPolicy).Execute()
 	if err != nil {

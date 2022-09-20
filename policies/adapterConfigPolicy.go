@@ -54,7 +54,7 @@ func CreateAdapterPolicy(config *Config) string {
 	adapterConfigPolicy.SetName("tf_adapter_config_sdk")
 	adapterConfigPolicy.SetDescription("test policy")
 	adapterConfigPolicy.SetOrganization(organizationRelationship)
-	resp, r, err := apiClient.AdapterApi.CreateAdapterConfigPolicy(ctx).AdapterConfigPolicy(*adapterConfigPolicy).Execute()
+	resp, _, err := apiClient.AdapterApi.CreateAdapterConfigPolicy(ctx).AdapterConfigPolicy(*adapterConfigPolicy).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}
