@@ -49,8 +49,8 @@ func CreateLdapPolicy(config *Config) {
 	ldapPolicy.SetEnableDns(true)
 	ldapPolicy.SetUserSearchPrecedence("LocalUserDb")
 	ldapPolicy.SetOrganization(organizationRelationship)
-	ldapPolicy.SetBaseProperties(baseProperties)
-	ldapPolicy.SetDnsParameters(dnsProperties)
+	ldapPolicy.SetBaseProperties(&baseProperties)
+	ldapPolicy.SetDnsParameters(&dnsProperties)
 	resp, r, err := apiClient.IamApi.CreateIamLdapPolicy(ctx).IamLdapPolicy(*ldapPolicy).Execute()
 	if err != nil {
 		log.Printf("Error: %v\n", err)
