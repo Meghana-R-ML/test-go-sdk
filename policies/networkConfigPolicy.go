@@ -8,7 +8,7 @@ import (
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
-func CreateNetworkConfigPolicy(config *Config) {
+func CreateNetworkConfigPolicy(config *Config) string {
 	var err error
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
@@ -29,9 +29,7 @@ func CreateNetworkConfigPolicy(config *Config) {
 	networkConfigPolicy.SetOrganization(organizationRelationship)
 	resp, r, err := apiClient.NetworkconfigApi.CreateNetworkconfigPolicy(ctx).NetworkconfigPolicy(*networkConfigPolicy).Execute()
 	if err != nil {
-		log.Printf("Error: %v\n", err)
-		log.Printf("HTTP response: %v\n", r)
-		return
+		log.Fatalf("Error: %v\n", err)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", resp)
+	return resp.GetMoid()
 }

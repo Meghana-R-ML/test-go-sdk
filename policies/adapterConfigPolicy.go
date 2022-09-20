@@ -41,7 +41,7 @@ func setSettingsMlom() *intersight.AdapterAdapterConfig {
 }
 
 
-func CreateAdapterPolicy(config *Config) {
+func CreateAdapterPolicy(config *Config) string {
 	var err error
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
@@ -58,9 +58,7 @@ func CreateAdapterPolicy(config *Config) {
 	adapterConfigPolicy.SetOrganization(organizationRelationship)
 	resp, r, err := apiClient.AdapterApi.CreateAdapterConfigPolicy(ctx).AdapterConfigPolicy(*adapterConfigPolicy).Execute()
 	if err != nil {
-		log.Printf("Error: %v\n", err)
-		log.Printf("HTTP response: %v\n", r)
-		return
+		log.Fatalf("Error: %v\n", err)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", resp)
+	return resp.getMoid()
 }

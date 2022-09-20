@@ -14,7 +14,7 @@ func setServers() []string {
 	return servers
 }
 
-func CreateNtpPolicy(config *Config) {
+func CreateNtpPolicy(config *Config) string {
 	var err error
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
@@ -29,9 +29,7 @@ func CreateNtpPolicy(config *Config) {
 	ntpPolicy.SetNtpServers(servers)
 	resp, r, err := apiClient.NtpApi.CreateNtpPolicy(ctx).NtpPolicy(*ntpPolicy).Execute()
 	if err != nil {
-		log.Printf("Error: %v\n", err)
-		log.Printf("HTTP response: %v\n", r)
-		return
+		log.Fatalf("Error: %v\n", err)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", resp)
+	return resp.GetMoid()
 }

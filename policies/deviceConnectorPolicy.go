@@ -9,7 +9,7 @@ import (
 )
 
 
-func CreateDeviceConnectorPolicy(config *Config) {
+func CreateDeviceConnectorPolicy(config *Config) string {
 	var err error
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
@@ -23,9 +23,7 @@ func CreateDeviceConnectorPolicy(config *Config) {
 	deviceConnectorPolicy.SetDescription("test policy")
 	resp, r, err := apiClient.DeviceconnectorApi.CreateDeviceconnectorPolicy(ctx).DeviceconnectorPolicy(*deviceConnectorPolicy).Execute()
 	if err != nil {
-		log.Printf("Error: %v\n", err)
-		log.Printf("HTTP response: %v\n", r)
-		return
+		log.Fatalf("Error: %v\n", err)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", resp)
+	return resp.GetMoid()
 }

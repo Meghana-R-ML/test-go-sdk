@@ -111,8 +111,8 @@ func getOrganizationRelationship(moid string) intersight.OrganizationOrganizatio
         return organizationRelationship
 }
 
-func getDefaultOrgMoid() string {
-        cfg := getApiClient(*config)
+func getDefaultOrgMoid(config *Config) string {
+        cfg := getApiClient(config)
         apiClient := cfg.ApiClient
         ctx := cfg.ctx
 

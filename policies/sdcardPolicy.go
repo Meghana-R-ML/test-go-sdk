@@ -24,7 +24,7 @@ func setPartitions() intersight.SdcardPartition {
 	return partitions
 }
 
-func CreateSdCardPolicy(config *Config) {
+func CreateSdCardPolicy(config *Config) string {
 	var err error
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
@@ -39,9 +39,7 @@ func CreateSdCardPolicy(config *Config) {
 	sdCardPolicy.SetPartitions(*partitions)
 	resp, r, err := apiClient.SdcardApi.CreateSdcardPolicy(ctx).SdcardPolicy(*sdCardPolicy).Execute()
 	if err != nil {
-		log.Printf("Error: %v\n", err)
-		log.Printf("HTTP response: %v\n", r)
-		return
+		log.Fatalf("Error: %v\n", err)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", resp)
+	return resp.GetMoid()
 }

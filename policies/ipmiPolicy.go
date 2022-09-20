@@ -9,7 +9,7 @@ import (
 )
 
 
-func CreateIpmiPolicy(config *Config) {
+func CreateIpmiPolicy(config *Config) string {
 	var err error
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
@@ -24,9 +24,7 @@ func CreateIpmiPolicy(config *Config) {
 	ipmiPolicy.SetOrganization(organizationRelationship)
 	resp, r, err := apiClient.IpmioverlanApi.CreateIpmioverlanPolicy(ctx).IpmioverlanPolicy(*ipmiPolicy).Execute()
 	if err != nil {
-		log.Printf("Error: %v\n", err)
-		log.Printf("HTTP response: %v\n", r)
-		return
+		log.Fatalf("Error: %v\n", err)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", resp)
+	return resp.GetMoid()
 }

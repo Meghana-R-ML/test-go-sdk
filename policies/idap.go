@@ -33,7 +33,7 @@ func setDnsProperties() intersight.IamLdapDnsParameters {
 	return *ldapDnsProperties
 }
 
-func CreateLdapPolicy(config *Config) {
+func CreateLdapPolicy(config *Config) string {
 	var err error
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
@@ -53,9 +53,7 @@ func CreateLdapPolicy(config *Config) {
 	ldapPolicy.SetDnsParameters(dnsProperties)
 	resp, r, err := apiClient.IamApi.CreateIamLdapPolicy(ctx).IamLdapPolicy(*ldapPolicy).Execute()
 	if err != nil {
-		log.Printf("Error: %v\n", err)
-		log.Printf("HTTP response: %v\n", r)
-		return
+		log.Fatalf("Error: %v\n", err)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", resp)
+	return resp.GetMoid()
 }
