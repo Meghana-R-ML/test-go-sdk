@@ -7,6 +7,12 @@ import (
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
+config := Config{
+        ApiKey:    apiKey,
+        SecretKey: secret,
+        Endpoint:  host,
+}
+
 type Config struct {
 	ApiKey    string
 	SecretKey string
@@ -16,12 +22,6 @@ type Config struct {
 }
 
 func ExecutePolicies(apiKey string, secret string, host string) {
-
-	config := Config{
-		ApiKey:    apiKey,
-		SecretKey: secret,
-		Endpoint:  host,
-	}
 
 	adapterconfigPolicyRelationship := getPolicyRelationship("adapter.ConfigPolicy")
 	log.Printf("adapterconfigPolicy response: %v\n", adapterconfigPolicyRelationship)
@@ -116,14 +116,11 @@ func getDefaultOrgMoid() string {
 
 	org_resp, r, org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
 	if org_err != nil {
-		log.Printf("Error: %v\n", err)
-                log.Printf("HTTP response: %v\n", r)
-                return
+		log.Fatal("Error: %v\n", org_err)
 	}
 	org_list := org_resp.OrganizationOrganizationList.GetResults()
 	if len(org_list) == 0 {
-		log.Printf("Couldn't find the organization specified")
-                return
+		log.Fatal("Couldn't find the organization specified")
 	}
 	org_moid := org_list[0].MoBaseMo.GetMoid()
 	return org_moid

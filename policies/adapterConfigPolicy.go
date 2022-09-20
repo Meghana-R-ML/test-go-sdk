@@ -8,16 +8,16 @@ import (
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
-func setEth() *intersight.AdapterEthSettings {
+func setEth() intersight.AdapterEthSettings {
 	eth := intersight.NewAdapterEthSettings("adapter.EthSettings", "adapter.EthSettings")
 	eth.SetLldpEnabled(true)
-	return eth
+	return *eth
 }
 
-func setFc() *intersight.AdapterFcSettings {
+func setFc() intersight.AdapterFcSettings {
 	fc := intersight.NewAdapterFcSettings("adapter.FcSettings", "adapter.FcSettings")
 	fc.SetFipEnabled(true)
-	return fc
+	return *fc
 }
 
 func setSettings() *intersight.AdapterAdapterConfig {
