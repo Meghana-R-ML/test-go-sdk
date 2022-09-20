@@ -59,6 +59,7 @@ func CreateObject(config *Config) {
 	apiClient := cfg.ApiClient
 	ctx := cfg.ctx
 
+	// Get Organization MOID
 	org_resp, r, org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
 	if org_err != nil {
 		log.Printf("Error: %v\n", err)
@@ -71,7 +72,7 @@ func CreateObject(config *Config) {
                 return
 	}
 	org_moid := org_list[0].MoBaseMo.GetMoid()
-	log.Printf("Organization moid: %v\n", org_moid)
+
 	bootLocalCdd := createBootLocalCdd()
 	bootLocalDisk := createBootLocalDisk()
 	organizationRelationship := getOrganizationRelationship(org_moid)
@@ -86,8 +87,6 @@ func CreateObject(config *Config) {
 	ifNoneMatch := ""
 	resp, r, err := apiClient.BootApi.CreateBootPrecisionPolicy(ctx).BootPrecisionPolicy(*bootPrecisionPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
-		// 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
-		// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
 		log.Printf("Error: %v\n", err)
 		log.Printf("HTTP response: %v\n", r)
 		return
@@ -98,8 +97,6 @@ func CreateObject(config *Config) {
 	id := resp.GetMoid()
 	getapiResponse, r, err := apiClient.BootApi.GetBootPrecisionPolicyByMoid(ctx, id).Execute()
 	if err != nil {
-		// 		fmt.Fprintf(os.Stderr, "Error -> GetBootPrecisionPolicyByMoid: %v\n", err)
-		// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
 		log.Printf("Error -> GetBootPrecisionPolicyByMoid: %v\n", err)
 		log.Printf("HTTP response: %v\n", r)
 		return
@@ -109,17 +106,15 @@ func CreateObject(config *Config) {
 	organizationMoid := getapiResponse.GetOrganization().MoMoRef.GetMoid()
 	bootSdcard := createBootSdcard()
 	bootIscsi := createBootIscsi()
-	organization1 := getOrganizationRelationship(organizationMoid)
+	organizationRelationship1 := getOrganizationRelationship(organizationMoid)
 	bootDevices1 := []intersight.BootDeviceBase{*bootSdcard, *bootIscsi}
 	updatebootPrecisionPolicy := intersight.NewBootPrecisionPolicyWithDefaults()
 	updatebootPrecisionPolicy.SetName("updated_boot_precision_policy_for_go_test")
 	updatebootPrecisionPolicy.SetDescription("updated description of boot precision policy for testing go example")
 	updatebootPrecisionPolicy.SetBootDevices(bootDevices1)
-	updatebootPrecisionPolicy.SetOrganization(organization1)
+	updatebootPrecisionPolicy.SetOrganization(organizationRelationship1)
 	updateResp, r, err := apiClient.BootApi.UpdateBootPrecisionPolicy(ctx, objMoid).BootPrecisionPolicy(*updatebootPrecisionPolicy).IfMatch(ifMatch).Execute()
 	if err != nil {
-		// 		fmt.Fprintf(os.Stderr, "Error -> UpdateBootPrecisionPolicy: %v\n", err)
-		// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
 		log.Printf("Error -> UpdateBootPrecisionPolicy: %v\n", err)
 		log.Printf("HTTP response: %v\n", r)
 		return
@@ -133,11 +128,9 @@ func CreateObject(config *Config) {
 	patchbootPrecisionPolicy.SetName("updated_boot_precision_policy_using_patch_go_test")
 	patchbootPrecisionPolicy.SetDescription("update the description of boot precision policy with patch for go test")
 	patchbootPrecisionPolicy.SetBootDevices(bootDevices2)
-	patchbootPrecisionPolicy.SetOrganization(organization1)
+	patchbootPrecisionPolicy.SetOrganization(organizationRelationship1)
 	patchResp, r, err := apiClient.BootApi.PatchBootPrecisionPolicy(ctx, objMoid).BootPrecisionPolicy(*patchbootPrecisionPolicy).IfMatch(ifMatch).Execute()
 	if err != nil {
-		// 		fmt.Fprintf(os.Stderr, "Error -> PatchBootPrecisionPolicy: %v\n", err)
-		// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", r)
 		log.Printf("Error -> PatchBootPrecisionPolicy: %v\n", err)
 		log.Printf("HTTP response: %v\n", r)
 		return
@@ -147,8 +140,6 @@ func CreateObject(config *Config) {
 	//Delete
 	fullResp, err := apiClient.BootApi.DeleteBootPrecisionPolicy(ctx, objMoid).Execute()
 	if err != nil {
-		// 		fmt.Fprintf(os.Stderr, "Error -> DeleteBootPrecisionPolicy: %v\n", err)
-		// 		fmt.Fprintf(os.Stderr, "HTTP response: %v\n", fullResp)
 		log.Printf("Error -> DeleteBootPrecisionPolicy: %v\n", err)
 		log.Printf("HTTP response: %v\n", fullResp)
 		return
