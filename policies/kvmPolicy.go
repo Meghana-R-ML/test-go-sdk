@@ -22,7 +22,7 @@ func CreateKvmPolicy(config *Config) string {
 	kvmPolicy.SetEnableVideoEncryption(true)
 	kvmPolicy.SetEnableLocalServerVideo(true)
 	kvmPolicy.SetOrganization(organizationRelationship)
-	resp, r, err := apiClient.KvmApi.CreateKvmPolicy(ctx).KvmPolicy(*kvmPolicy).Execute()
+	resp, _, err := apiClient.KvmApi.CreateKvmPolicy(ctx).KvmPolicy(*kvmPolicy).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

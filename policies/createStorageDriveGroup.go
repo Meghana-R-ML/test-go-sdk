@@ -73,7 +73,7 @@ func CreateSorageDriveGroup(config *Config, storageMoid string) string {
 
 	ifMatch := ""
 	ifNoneMatch := ""
-	resp, r, err := apiClient.StorageApi.CreateStorageDriveGroup(ctx).StorageDriveGroup(*storageDriveGroup).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	resp, _, err := apiClient.StorageApi.CreateStorageDriveGroup(ctx).StorageDriveGroup(*storageDriveGroup).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

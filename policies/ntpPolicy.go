@@ -25,7 +25,7 @@ func CreateNtpPolicy(config *Config) string {
 	ntpPolicy.SetOrganization(organizationRelationship)
 	servers := setServers()
 	ntpPolicy.SetNtpServers(servers)
-	resp, r, err := apiClient.NtpApi.CreateNtpPolicy(ctx).NtpPolicy(*ntpPolicy).Execute()
+	resp, _, err := apiClient.NtpApi.CreateNtpPolicy(ctx).NtpPolicy(*ntpPolicy).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

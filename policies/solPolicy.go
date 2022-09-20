@@ -23,7 +23,7 @@ func CreateSolPolicy(config *Config) string {
 
 	ifMatch := ""
 	ifNoneMatch := ""
-	resp, r, err := apiClient.SolApi.CreateSolPolicy(ctx).SolPolicy(*solPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	resp, _, err := apiClient.SolApi.CreateSolPolicy(ctx).SolPolicy(*solPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

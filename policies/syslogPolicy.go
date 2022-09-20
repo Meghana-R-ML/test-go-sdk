@@ -43,7 +43,7 @@ func CreateSyslogPolicy(config *Config) string {
 
 	ifMatch := ""
 	ifNoneMatch := ""
-	resp, r, err := apiClient.SyslogApi.CreateSyslogPolicy(ctx).SyslogPolicy(*syslogPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	resp, _, err := apiClient.SyslogApi.CreateSyslogPolicy(ctx).SyslogPolicy(*syslogPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

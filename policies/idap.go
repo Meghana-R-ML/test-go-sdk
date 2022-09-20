@@ -49,7 +49,7 @@ func CreateLdapPolicy(config *Config) string {
 	ldapPolicy.SetOrganization(organizationRelationship)
 	ldapPolicy.SetBaseProperties(baseProperties)
 	ldapPolicy.SetDnsParameters(dnsProperties)
-	resp, r, err := apiClient.IamApi.CreateIamLdapPolicy(ctx).IamLdapPolicy(*ldapPolicy).Execute()
+	resp, _, err := apiClient.IamApi.CreateIamLdapPolicy(ctx).IamLdapPolicy(*ldapPolicy).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

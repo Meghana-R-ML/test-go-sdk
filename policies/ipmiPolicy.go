@@ -20,7 +20,7 @@ func CreateIpmiPolicy(config *Config) string {
 	ipmiPolicy.SetEnabled(true)
 	ipmiPolicy.SetPrivilege("admin")
 	ipmiPolicy.SetOrganization(organizationRelationship)
-	resp, r, err := apiClient.IpmioverlanApi.CreateIpmioverlanPolicy(ctx).IpmioverlanPolicy(*ipmiPolicy).Execute()
+	resp, _, err := apiClient.IpmioverlanApi.CreateIpmioverlanPolicy(ctx).IpmioverlanPolicy(*ipmiPolicy).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

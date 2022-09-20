@@ -37,7 +37,7 @@ func CreateSdCardPolicy(config *Config) string {
 	sdCardPolicy.SetOrganization(organizationRelationship)
         partitions := []intersight.SdcardPartition{*partition}
 	sdCardPolicy.SetPartitions(partitions)
-	resp, r, err := apiClient.SdcardApi.CreateSdcardPolicy(ctx).SdcardPolicy(*sdCardPolicy).Execute()
+	resp, _, err := apiClient.SdcardApi.CreateSdcardPolicy(ctx).SdcardPolicy(*sdCardPolicy).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

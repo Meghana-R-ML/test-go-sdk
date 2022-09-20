@@ -116,7 +116,7 @@ func getDefaultOrgMoid(config *Config) string {
         apiClient := cfg.ApiClient
         ctx := cfg.ctx
 
-	org_resp, r, org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
+	org_resp, _, org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
 	if org_err != nil {
 		log.Fatal("Error: %v\n", org_err)
 	}

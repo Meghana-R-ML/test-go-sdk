@@ -24,7 +24,7 @@ func CreateVmediaPolicy(config *Config) string {
 
 	ifMatch := ""
 	ifNoneMatch := ""
-	resp, r, err := apiClient.VmediaApi.CreateVmediaPolicy(ctx).VmediaPolicy(*vmediaPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	resp, _, err := apiClient.VmediaApi.CreateVmediaPolicy(ctx).VmediaPolicy(*vmediaPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

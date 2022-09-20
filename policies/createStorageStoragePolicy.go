@@ -29,7 +29,7 @@ func CreateStorageStoragePolicy(config *Config) string{
 
 	ifMatch := ""
 	ifNoneMatch := ""
-	resp, r, err := apiClient.StorageApi.CreateStorageStoragePolicy(ctx).StorageStoragePolicy(*storageStoragePolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	resp, _, err := apiClient.StorageApi.CreateStorageStoragePolicy(ctx).StorageStoragePolicy(*storageStoragePolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

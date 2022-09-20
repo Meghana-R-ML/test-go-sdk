@@ -29,7 +29,7 @@ func CreateSmtpPolicy(config *Config) string {
 
 	ifMatch := ""
 	ifNoneMatch := ""
-	resp, r, err := apiClient.SmtpApi.CreateSmtpPolicy(ctx).SmtpPolicy(*smtpPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	resp, _, err := apiClient.SmtpApi.CreateSmtpPolicy(ctx).SmtpPolicy(*smtpPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

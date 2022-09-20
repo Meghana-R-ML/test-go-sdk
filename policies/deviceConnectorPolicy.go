@@ -19,7 +19,7 @@ func CreateDeviceConnectorPolicy(config *Config) string {
 	deviceConnectorPolicy.SetLockoutEnabled(true)
 	deviceConnectorPolicy.SetName("device_con1_sdk")
 	deviceConnectorPolicy.SetDescription("test policy")
-	resp, r, err := apiClient.DeviceconnectorApi.CreateDeviceconnectorPolicy(ctx).DeviceconnectorPolicy(*deviceConnectorPolicy).Execute()
+	resp, _, err := apiClient.DeviceconnectorApi.CreateDeviceconnectorPolicy(ctx).DeviceconnectorPolicy(*deviceConnectorPolicy).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

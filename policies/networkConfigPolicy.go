@@ -25,7 +25,7 @@ func CreateNetworkConfigPolicy(config *Config) string {
 	networkConfigPolicy.SetAlternateIpv6dnsServer("::")
 	networkConfigPolicy.SetEnableIpv4dnsFromDhcp(false)
 	networkConfigPolicy.SetOrganization(organizationRelationship)
-	resp, r, err := apiClient.NetworkconfigApi.CreateNetworkconfigPolicy(ctx).NetworkconfigPolicy(*networkConfigPolicy).Execute()
+	resp, _, err := apiClient.NetworkconfigApi.CreateNetworkconfigPolicy(ctx).NetworkconfigPolicy(*networkConfigPolicy).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

@@ -58,7 +58,7 @@ func CreateSnmpPolicy(config *Config) string {
 
 	ifMatch := ""
 	ifNoneMatch := ""
-	resp, r, err := apiClient.SnmpApi.CreateSnmpPolicy(ctx).SnmpPolicy(*snmpPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	resp, _, err := apiClient.SnmpApi.CreateSnmpPolicy(ctx).SnmpPolicy(*snmpPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}
