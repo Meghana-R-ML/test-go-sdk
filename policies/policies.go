@@ -186,7 +186,7 @@ func getPolicyRelationship(policy string, config Config) intersight.PolicyAbstra
 	
 	policy_object := new(intersight.PolicyAbstractPolicy)
 	policy_object.SetClassId("mo.MoRef")
-	policy_object.ObjectType(policy)
+	policy_object.SetObjectType(policy)
 	policy_object.SetMoid(policy_moid)
 	policyRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(policy_object)
 	return policyRelationship

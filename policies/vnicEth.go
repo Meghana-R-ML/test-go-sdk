@@ -120,9 +120,7 @@ func CreateVnicEthAdapterPolicy(config *Config) string {
 	respAdapter, r, err := apiClient.VnicApi.CreateVnicEthAdapterPolicy(ctx).VnicEthAdapterPolicy(*ethadapterPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
-		log.Fatalf("HTTP response: %v\n", r)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", respAdapter)
 	ethAdapterPolicyMoid = respAdapter.GetMoid()
 	return ethAdapterPolicyMoid
 }
@@ -150,11 +148,8 @@ func CreateVnicEthNetworkPolicy(config *Config) string {
 	ifNoneMatch := ""
 	respNetwork, r, err := apiClient.VnicApi.CreateVnicEthNetworkPolicy(ctx).VnicEthNetworkPolicy(*ethNetworkPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
-		log.Printf("Error: %v\n", err)
-		log.Printf("HTTP response: %v\n", r)
-		return
+		log.Fatalf("Error: %v\n", err)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", respNetwork)
 	ethNetworkMoid = respNetwork.GetMoid()
 	return ethNetworkMoid
 }
@@ -180,9 +175,7 @@ func CreateVnicEthQosPolicy(config *Config) string {
 	respQos, r, err := apiClient.VnicApi.CreateVnicEthQosPolicy(ctx).VnicEthQosPolicy(*ethQosPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
-		log.Fatalf("HTTP response: %v\n", r)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", respQos)
 	ethQosMoid = respQos.GetMoid()
 	return ethQosMoid
 }
@@ -204,9 +197,7 @@ func CreateVnicLanConnectivityPolicy(config *Config) string {
 	respLan, r, err := apiClient.VnicApi.CreateVnicLanConnectivityPolicy(ctx).VnicLanConnectivityPolicy(*vniclanConnectivityPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
-		log.Fatalf("HTTP response: %v\n", r)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", respLan)
 	lanConnectivityMoid = respLan.GetMoid()
 	return lanConnectivityMoid
 }

@@ -32,9 +32,7 @@ func CreateSmtpPolicy(config *Config) string {
 	resp, r, err := apiClient.SmtpApi.CreateSmtpPolicy(ctx).SmtpPolicy(*smtpPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
-		log.Fatalf("HTTP response: %v\n", r)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", resp)
 	moid := resp.GetMoid()
 	return moid
 }

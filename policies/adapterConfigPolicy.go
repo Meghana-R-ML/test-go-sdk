@@ -58,5 +58,5 @@ func CreateAdapterPolicy(config *Config) string {
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}
-	return resp.getMoid()
+	return resp.GetMoid()
 }
