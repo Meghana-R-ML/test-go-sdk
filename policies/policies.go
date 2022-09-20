@@ -16,83 +16,88 @@ type Config struct {
 	ctx       context.Context
 }
 
-var config = Config{ApiKey: apiKey, SecretKey: secret, Endpoint: host,}
 
 func ExecutePolicies(apiKey string, secret string, host string) {
 
-	adapterconfigPolicyRelationship := getPolicyRelationship("adapter.ConfigPolicy")
+	config := Config{
+		ApiKey:    apiKey,
+		SecretKey: secret,
+		Endpoint:  host,
+	}
+
+	adapterconfigPolicyRelationship := getPolicyRelationship("adapter.ConfigPolicy", config)
 	log.Printf("adapterconfigPolicy response: %v\n", adapterconfigPolicyRelationship)
 	
-	deviceconnectorPolicyRelationship := getPolicyRelationship("deviceconnector.Policy")
+	deviceconnectorPolicyRelationship := getPolicyRelationship("deviceconnector.Policy", config)
 	log.Printf("deviceconnector response: %v\n", deviceconnectorPolicyRelationship)
 	
-	ldapPolicyRelationship := getPolicyRelationship("iam.LdapPolicy")
+	ldapPolicyRelationship := getPolicyRelationship("iam.LdapPolicy", config)
 	log.Printf("ldapPolicy response: %v\n", ldapPolicyRelationship)
 	
-	ipmiPolicyRelationship := getPolicyRelationship("ipmioverlan.Policy")
+	ipmiPolicyRelationship := getPolicyRelationship("ipmioverlan.Policy", config)
 	log.Printf("ipmiPolicy response: %v\n", ipmiPolicyRelationship)
 	
-	kvmPolicyRelationship := getPolicyRelationship("kvm.Policy")
+	kvmPolicyRelationship := getPolicyRelationship("kvm.Policy", config)
 	log.Printf("kvmPolicy response: %v\n", kvmPolicyRelationship)
 	
-	networkConfigPolicyRelationship := getPolicyRelationship("networkconfig.Policy")
+	networkConfigPolicyRelationship := getPolicyRelationship("networkconfig.Policy", config)
 	log.Printf("networkConfigPolicy response: %v\n", networkConfigPolicyRelationship)
 	
-	ntpPolicyRelationship := getPolicyRelationship("ntp.Policy")
+	ntpPolicyRelationship := getPolicyRelationship("ntp.Policy", config)
 	log.Printf("ntpPolicy response: %v\n", ntpPolicyRelationship)
 	
-	smtpPolicyRelationship := getPolicyRelationship("smtp.Policy")
+	smtpPolicyRelationship := getPolicyRelationship("smtp.Policy", config)
 	log.Printf("smtpPolicy response: %v\n", smtpPolicyRelationship)
 	
-	snmpPolicyRelationship := getPolicyRelationship("snmp.Policy")
+	snmpPolicyRelationship := getPolicyRelationship("snmp.Policy", config)
 	log.Printf("snmpPolicy response: %v\n", snmpPolicyRelationship)
 	
-	solPolicyRelationship := getPolicyRelationship("sol.Policy")
+	solPolicyRelationship := getPolicyRelationship("sol.Policy", config)
 	log.Printf("solPolicy response: %v\n", solPolicyRelationship)
 	
-	syslogPolicyRelationship := getPolicyRelationship("syslog.Policy")
+	syslogPolicyRelationship := getPolicyRelationship("syslog.Policy", config)
 	log.Printf("syslogPolicy response: %v\n", syslogPolicyRelationship)
 	
-	userPolicyRelationship := getPolicyRelationship("iam.EndPointUserPolicy")
+	userPolicyRelationship := getPolicyRelationship("iam.EndPointUserPolicy", config)
 	log.Printf("userPolicy response: %v\n", userPolicyRelationship)
 	
-	storagePolicyRelationship := getPolicyRelationship("storage.StoragePolicy")
+	storagePolicyRelationship := getPolicyRelationship("storage.StoragePolicy", config)
 	log.Printf("storagePolicy response: %v\n", storagePolicyRelationship)
 	
-	storageDriveGroupRelationship := getPolicyRelationship("storage.DriveGroup")
+	storageDriveGroupRelationship := getPolicyRelationship("storage.DriveGroup", config)
 	log.Printf("storageDriveGroup response: %v\n", storageDriveGroupRelationship)
 	
-	vmediaPolicyRelationship := getPolicyRelationship("vmedia.Policy")
+	vmediaPolicyRelationship := getPolicyRelationship("vmedia.Policy", config)
 	log.Printf("vmedia response: %v\n", vmediaPolicyRelationship)
 
-	ethAdapterPolicyRelationship := getPolicyRelationship("vnic.EthAdapterPolicy")
+	ethAdapterPolicyRelationship := getPolicyRelationship("vnic.EthAdapterPolicy", config)
 	log.Printf("ethAdapterPolicy response: %v\n", ethAdapterPolicyRelationship)
 	
-	ethNetworkPolicyRelationship := getPolicyRelationship("vnic.EthNetworkPolicy")
+	ethNetworkPolicyRelationship := getPolicyRelationship("vnic.EthNetworkPolicy", config)
 	log.Printf("ethNetworkPolicy response: %v\n", ethNetworkPolicyRelationship)
 
-	ethQosPolicyRelationship := getPolicyRelationship("vnic.EthQosPolicy")
+	ethQosPolicyRelationship := getPolicyRelationship("vnic.EthQosPolicy", config)
 	log.Printf("ethQosPolicy response: %v\n", ethQosPolicyRelationship)
 
-	lanPolicyRelationship := getPolicyRelationship("vnic.LanConnectivityPolicy")
+	lanPolicyRelationship := getPolicyRelationship("vnic.LanConnectivityPolicy", config)
 	log.Printf("lanPolicy response: %v\n", lanPolicyRelationship)
 
-	ethIfPolicyRelationship := getPolicyRelationship("vnic.EthIf")
+	ethIfPolicyRelationship := getPolicyRelationship("vnic.EthIf", config)
 	log.Printf("ethIfPolicy response: %v\n", ethIfPolicyRelationship)
 	
-	fcAdapterPolicyRelationship := getPolicyRelationship("vnic.FcAdapterPolicy")
+	fcAdapterPolicyRelationship := getPolicyRelationship("vnic.FcAdapterPolicy", config)
 	log.Printf("fcAdapterPolicy response: %v\n", fcAdapterPolicyRelationship)
 
-	fcNetworkPolicyRelationship := getPolicyRelationship("vnic.FcNetworkPolicy")
+	fcNetworkPolicyRelationship := getPolicyRelationship("vnic.FcNetworkPolicy", config)
 	log.Printf("fcNetworkPolicy response: %v\n", fcNetworkPolicyRelationship)
 	
-	fcQosPolicyRelationship := getPolicyRelationship("vnic.FcQosPolicy")
+	fcQosPolicyRelationship := getPolicyRelationship("vnic.FcQosPolicy", config)
 	log.Printf("fcQosPolicy response: %v\n", fcQosPolicyRelationship)
 	
-	sanPolicyRelationship := getPolicyRelationship("vnic.SanConnectivityPolicy")
+	sanPolicyRelationship := getPolicyRelationship("vnic.SanConnectivityPolicy", config)
 	log.Printf("sanPolicy response: %v\n", sanPolicyRelationship)
 	
-	fcIfPolicyRelationship := getPolicyRelationship("vnic.FcIf")
+	fcIfPolicyRelationship := getPolicyRelationship("vnic.FcIf", config)
 	log.Printf("fcIfPolicy response: %v\n", fcIfPolicyRelationship)
 	
 }
@@ -123,7 +128,7 @@ func getDefaultOrgMoid() string {
 	return org_moid
 }
 
-func getPolicyRelationship(policy string) intersight.PolicyAbstractPolicyRelationship {
+func getPolicyRelationship(policy string, config Config{}) intersight.PolicyAbstractPolicyRelationship {
 	var policy_moid string
 	switch policy {
 		case "adapter.ConfigPolicy":
