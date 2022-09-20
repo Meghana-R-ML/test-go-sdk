@@ -43,15 +43,8 @@ func createBootVirtualMedia() *intersight.BootDeviceBase {
 	return bootVirtualMedia
 }
 
-func createOrganization() intersight.OrganizationOrganizationRelationship {
-	organization := new(intersight.OrganizationOrganization)
-	organization.ClassId = "mo.MoRef"
-	organization.ObjectType = "organization.Organization"
-	organizationRelationship := intersight.OrganizationOrganizationAsOrganizationOrganizationRelationship(organization)
-	return organizationRelationship
-}
 
-func createOrganizationWithMoid(moid string) intersight.OrganizationOrganizationRelationship {
+func getOrganizationRelationship(moid string) intersight.OrganizationOrganizationRelationship {
 	organization := new(intersight.OrganizationOrganization)
 	organization.ClassId = "mo.MoRef"
 	organization.ObjectType = "organization.Organization"
@@ -65,15 +58,24 @@ func CreateObject(config *Config) {
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
 	ctx := cfg.ctx
+
+	org_resp, _, org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
+	if org_err != nil {
+		log.Printf("Error: %v\n", err)
+                log.Printf("HTTP response: %v\n", r)
+                return	
+	}
+	org_moid := org_resp.GetMoid()
+	log.Printf("Organization moid: %v\n", org_moid)
 	bootLocalCdd := createBootLocalCdd()
 	bootLocalDisk := createBootLocalDisk()
-	organization := createOrganization()
+	organizationRelationship := getOrganizationRelationship(org_moid)
 	bootDevices := []intersight.BootDeviceBase{*bootLocalDisk, *bootLocalCdd}
 	bootPrecisionPolicy := intersight.NewBootPrecisionPolicyWithDefaults()
 	bootPrecisionPolicy.SetName("sample_boot_policy1")
 	bootPrecisionPolicy.SetDescription("sample boot precision policy")
 	bootPrecisionPolicy.SetBootDevices(bootDevices)
-	bootPrecisionPolicy.SetOrganization(organization)
+	bootPrecisionPolicy.SetOrganization(organizationRelationship)
 
 	ifMatch := ""
 	ifNoneMatch := ""
@@ -89,6 +91,7 @@ func CreateObject(config *Config) {
 
 	//Update
 	id := resp.GetMoid()
+	log.Printf("Get moid from response : %v\n", id)
 	getapiResponse, r, err := apiClient.BootApi.GetBootPrecisionPolicyByMoid(ctx, id).Execute()
 	if err != nil {
 		// 		fmt.Fprintf(os.Stderr, "Error -> GetBootPrecisionPolicyByMoid: %v\n", err)
@@ -101,7 +104,7 @@ func CreateObject(config *Config) {
 	organizationMoid := getapiResponse.GetOrganization().MoMoRef.GetMoid()
 	bootSdcard := createBootSdcard()
 	bootIscsi := createBootIscsi()
-	organization1 := createOrganizationWithMoid(organizationMoid)
+	organization1 := getOrganizationRelationship(organizationMoid)
 	bootDevices1 := []intersight.BootDeviceBase{*bootSdcard, *bootIscsi}
 	updatebootPrecisionPolicy := intersight.NewBootPrecisionPolicyWithDefaults()
 	updatebootPrecisionPolicy.SetName("updated_boot_precision_policy_for_go_test")
