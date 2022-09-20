@@ -19,11 +19,10 @@ func createSnmpTrap() *intersight.SnmpTrap {
 
 func createSnmpUser() *intersight.SnmpUser {
 	snmpUser := intersight.NewSnmpUser("snmp.User","snmp.User")
-	var auth_pass,priv_pass string
 	snmpUser.SetName("demouser")
 	snmpUser.SetPrivacyType("AES")
-	snmpUser.SetAuthPassword(auth_pass)
-	snmpUser.SetPrivacyPassword(priv_pass)
+	snmpUser.SetAuthPassword("changeMe")
+	snmpUser.SetPrivacyPassword("changeMe")
 	snmpUser.SetSecurityLevel("AuthPriv")
 	snmpUser.SetAuthType("SHA")
 	return snmpUser
