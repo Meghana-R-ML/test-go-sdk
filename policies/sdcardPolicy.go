@@ -8,14 +8,6 @@ import (
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
-func setOrganization() intersight.OrganizationOrganizationRelationship {
-	organization := new(intersight.OrganizationOrganization)
-	organization.ClassId = "mo.MoRef"
-	organization.ObjectType = "organization.Organization"
-	organizationRelationship := intersight.OrganizationOrganizationAsOrganizationOrganizationRelationship(organization)
-	return organizationRelationship
-}
-
 func createVirtualDrives() intersight.SdcardVirtualDrive {
 	virtualDrives := intersight.NewSdcardVirtualDriveWithDefaults()
 	virtualDrives.SetEnable(true)
@@ -37,12 +29,13 @@ func CreateSdCardPolicy(config *Config) {
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
 	ctx := cfg.ctx
-	organization := setOrganization()
+	org_moid := getDefaultOrgMoid()
+        organizationRelationship := getOrganizationRelationship(org_moid)
 	partitions := setPartitions()
 	sdCardPolicy := intersight.NewSdcardPolicyWithDefaults()
 	sdCardPolicy.SetName("tf_sdcard_sdk")
 	sdCardPolicy.SetDescription("test policy")
-	sdCardPolicy.SetOrganization(organization)
+	sdCardPolicy.SetOrganization(organizationRelationship)
 	sdCardPolicy.SetPartitions(*partitions)
 	resp, r, err := apiClient.SdcardApi.CreateSdcardPolicy(ctx).SdcardPolicy(*sdCardPolicy).Execute()
 	if err != nil {

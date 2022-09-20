@@ -8,26 +8,20 @@ import (
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
-func setOrganization() intersight.OrganizationOrganizationRelationship {
-	organization := new(intersight.OrganizationOrganization)
-	organization.ClassId = "mo.MoRef"
-	organization.ObjectType = "organization.Organization"
-	organizationRelationship := intersight.OrganizationOrganizationAsOrganizationOrganizationRelationship(organization)
-	return organizationRelationship
-}
 
 func CreateIpmiPolicy(config *Config) {
 	var err error
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
 	ctx := cfg.ctx
-	organization := setOrganization()
+	org_moid := getDefaultOrgMoid()
+        organizationRelationship := getOrganizationRelationship(org_moid)
 	ipmiPolicy := intersight.NewIpmioverlanPolicyWithDefaults()
 	ipmiPolicy.SetName("tf_ipmi_sdk")
 	ipmiPolicy.SetDescription("demo ipmi policy")
 	ipmiPolicy.SetEnabled(true)
 	ipmiPolicy.SetPrivilege("admin")
-	ipmiPolicy.SetOrganization(organization)
+	ipmiPolicy.SetOrganization(organizationRelationship)
 	resp, r, err := apiClient.IpmioverlanApi.CreateIpmioverlanPolicy(ctx).IpmioverlanPolicy(*ipmiPolicy).Execute()
 	if err != nil {
 		log.Printf("Error: %v\n", err)

@@ -40,13 +40,6 @@ func setSettingsMlom() intersight.AdapterAdapterConfig {
 	return *adapterConfig
 }
 
-func setOrganization() intersight.OrganizationOrganizationRelationship {
-	organization := new(intersight.OrganizationOrganization)
-	organization.ClassId = "mo.MoRef"
-	organization.ObjectType = "organization.Organization"
-	organizationRelationship := intersight.OrganizationOrganizationAsOrganizationOrganizationRelationship(organization)
-	return organizationRelationship
-}
 
 func CreateAdapterPolicy(config *Config) {
 	var err error
@@ -56,7 +49,8 @@ func CreateAdapterPolicy(config *Config) {
 	settings := setSettings()
 	settingsMlom := setSettingsMlom()
 	settingsArr := []intersight.AdapterAdapterConfig{*settings, *settingsMlom}
-	organizationRelationship := setOrganization()
+	org_moid := getDefaultOrgMoid()
+	organizationRelationship := getOrganizationRelationship(org_moid)
 	adapterConfigPolicy := intersight.NewAdapterConfigPolicyWithDefaults()
 	adapterConfigPolicy.SetSettings(settingsArr)
 	adapterConfigPolicy.SetName("tf_adapter_config_sdk")

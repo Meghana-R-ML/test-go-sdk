@@ -8,13 +8,6 @@ import (
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
-func setOrganization() intersight.OrganizationOrganizationRelationship {
-	organization := new(intersight.OrganizationOrganization)
-	organization.ClassId = "mo.MoRef"
-	organization.ObjectType = "organization.Organization"
-	organizationRelationship := intersight.OrganizationOrganizationAsOrganizationOrganizationRelationship(organization)
-	return organizationRelationship
-}
 
 func setBaseProperties() intersight.IamLdapBaseProperties {
 	ldapBaseProperties := intersight.NewIamLdapBasePropertiesWithDefaults()
@@ -45,7 +38,8 @@ func CreateLdapPolicy(config *Config) {
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
 	ctx := cfg.ctx
-	organization := setOrganization()
+	org_moid := getDefaultOrgMoid()
+        organizationRelationship := getOrganizationRelationship(org_moid)
 	baseProperties := setBaseProperties()
 	dnsProperties := setDnsProperties()
 	ldapPolicy := intersight.NewIamLdapPolicyWithDefaults()
@@ -54,7 +48,7 @@ func CreateLdapPolicy(config *Config) {
 	ldapPolicy.SetEnabled(true)
 	ldapPolicy.SetEnableDns(true)
 	ldapPolicy.SetUserSearchPrecedence("LocalUserDb")
-	ldapPolicy.SetOrganization(organization)
+	ldapPolicy.SetOrganization(organizationRelationship)
 	ldapPolicy.SetBaseProperties(baseProperties)
 	ldapPolicy.SetDnsPaarameters(dnsProperties)
 	resp, r, err := apiClient.IamApi.CreateIamLdapPolicy(ctx).IamLdapPolicy(*ldapPolicy).Execute()
