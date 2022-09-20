@@ -9,7 +9,7 @@ import (
 )
 
 
-func setBaseProperties() intersight.IamLdapBaseProperties {
+func setBaseProperties() *intersight.IamLdapBaseProperties {
 	ldapBaseProperties := intersight.NewIamLdapBasePropertiesWithDefaults()
 	ldapBaseProperties.SetAttribute("CiscoAvPair")
 	ldapBaseProperties.SetBaseDn("DC=QATCSLABTPI02,DC=cisco,DC=com")
@@ -25,11 +25,11 @@ func setBaseProperties() intersight.IamLdapBaseProperties {
 	return ldapBaseProperties
 }
 
-func setDnsProperties() intersight.IamLdapDnsParameters {
+func setDnsProperties() *intersight.IamLdapDnsParameters {
 	ldapDnsProperties := intersight.NewIamLdapDnsParametersWithDefaults()
 	ldapDnsProperties.SetSource("Extracted")
 	ldapDnsProperties.SetSearchForest("xyz")
-	ldapDnsProperties.SetDomain("abc")
+	ldapDnsProperties.SetSearchDomain("abc")
 	return ldapDnsProperties
 }
 
@@ -50,7 +50,7 @@ func CreateLdapPolicy(config *Config) {
 	ldapPolicy.SetUserSearchPrecedence("LocalUserDb")
 	ldapPolicy.SetOrganization(organizationRelationship)
 	ldapPolicy.SetBaseProperties(baseProperties)
-	ldapPolicy.SetDnsPaarameters(dnsProperties)
+	ldapPolicy.SetDnsParameters(dnsProperties)
 	resp, r, err := apiClient.IamApi.CreateIamLdapPolicy(ctx).IamLdapPolicy(*ldapPolicy).Execute()
 	if err != nil {
 		log.Printf("Error: %v\n", err)

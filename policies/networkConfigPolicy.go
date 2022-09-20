@@ -15,7 +15,7 @@ func CreateNetworkConfigPolicy(config *Config) {
 	ctx := cfg.ctx
 	org_moid := getDefaultOrgMoid()
         organizationRelationship := getOrganizationRelationship(org_moid)
-	networkConfigPolicy := intersight.NewNetworkConfigPolicyWithDefaults()
+	networkConfigPolicy := intersight.NewNetworkconfigPolicyWithDefaults()
 	networkConfigPolicy.SetName("tf_network_config1_sdk")
 	networkConfigPolicy.SetDescription("test policy")
 	networkConfigPolicy.SetEnableDynamicDns(false)

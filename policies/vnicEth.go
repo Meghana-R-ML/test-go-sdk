@@ -8,7 +8,7 @@ import (
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
-var adapterPolicyMoid, ethNetworkMoid, qosMoid, lanConnectivityMoid string
+var ethAdapterPolicyMoid, ethNetworkMoid, ethQosMoid, lanConnectivityMoid string
 
 func createEthAdapterPolicyRelationship(moid string) intersight.VnicEthAdapterPolicyRelationship {
 	adapterPolicy := new(intersight.VnicEthAdapterPolicy)
@@ -125,8 +125,8 @@ func CreateVnicEthAdapterPolicy(config *Config) string {
 		log.Fatalf("HTTP response: %v\n", r)
 	}
 	fmt.Fprintf(os.Stdout, "Response: %v\n", respAdapter)
-	adapterPolicyMoid = respAdapter.GetMoid()
-	return adapterPolicyMoid
+	ethAdapterPolicyMoid = respAdapter.GetMoid()
+	return ethAdapterPolicyMoid
 }
 
 func CreateVnicEthNetworkPolicy(config *Config) string {
@@ -185,8 +185,8 @@ func CreateVnicEthQosPolicy(config *Config) string {
 		log.Fatalf("HTTP response: %v\n", r)
 	}
 	fmt.Fprintf(os.Stdout, "Response: %v\n", respQos)
-	qosMoid = respQos.GetMoid()
-	return qosMoid
+	ethQosMoid = respQos.GetMoid()
+	return ethQosMoid
 }
 
 func CreateVnicLanConnectivityPolicy(config *Config) string {
@@ -253,13 +253,13 @@ func CreateVnicEthIf(config *Config) string {
 	vmqSettings := vmqSetting.Get()
 	ethIf.SetVmqSettings(*vmqSettings)
 	
-	ethAdapterPolicyRelationship := createEthAdapterPolicyRelationship(adapterPolicyMoid)
+	ethAdapterPolicyRelationship := createEthAdapterPolicyRelationship(ethAdapterPolicyMoid)
 	ethIf.SetEthAdapterPolicy(ethAdapterPolicyRelationship)
 	
 	ethNetworkPolicyRelationship := createEthNetworkPolicyRelationship(ethNetworkMoid)
 	ethIf.SetEthNetworkPolicy(ethNetworkPolicyRelationship)
 	
-	ethQosPolicyRelationship := createEthQosPolicyRelationship(qosMoid)
+	ethQosPolicyRelationship := createEthQosPolicyRelationship(ethQosMoid)
 	ethIf.SetEthQosPolicy(ethQosPolicyRelationship)
 	
 	lanConnectivityPolicyRelationship := createLanConnectivityPolicy(lanConnectivityMoid)

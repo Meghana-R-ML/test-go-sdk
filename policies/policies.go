@@ -184,10 +184,10 @@ func getPolicyRelationship(policy string) intersight.PolicyAbstractPolicyRelatio
 			policy_moid = CreateVnicFcIf(&config)	
 	}
 	
-	policy := new(intersight.PolicyAbstractPolicy)
-	policy.SetClassId("mo.MoRef")
-	policy.ObjectType(policy)
-	policy.SetMoid(policy_moid)
-	policyRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(policy)
+	policy_object := new(intersight.PolicyAbstractPolicy)
+	policy_object.SetClassId("mo.MoRef")
+	policy_object.ObjectType(policy)
+	policy_object.SetMoid(policy_moid)
+	policyRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(policy_object)
 	return policyRelationship
 }
