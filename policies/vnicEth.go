@@ -117,7 +117,7 @@ func CreateVnicEthAdapterPolicy(config *Config) string {
 
 	ifMatch := ""
 	ifNoneMatch := ""
-	respAdapter, r, err := apiClient.VnicApi.CreateVnicEthAdapterPolicy(ctx).VnicEthAdapterPolicy(*ethadapterPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	respAdapter, _, err := apiClient.VnicApi.CreateVnicEthAdapterPolicy(ctx).VnicEthAdapterPolicy(*ethadapterPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}
@@ -146,7 +146,7 @@ func CreateVnicEthNetworkPolicy(config *Config) string {
 	
 	ifMatch := ""
 	ifNoneMatch := ""
-	respNetwork, r, err := apiClient.VnicApi.CreateVnicEthNetworkPolicy(ctx).VnicEthNetworkPolicy(*ethNetworkPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	respNetwork, _, err := apiClient.VnicApi.CreateVnicEthNetworkPolicy(ctx).VnicEthNetworkPolicy(*ethNetworkPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}
@@ -172,7 +172,7 @@ func CreateVnicEthQosPolicy(config *Config) string {
 	
 	ifMatch := ""
 	ifNoneMatch := ""
-	respQos, r, err := apiClient.VnicApi.CreateVnicEthQosPolicy(ctx).VnicEthQosPolicy(*ethQosPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	respQos, _, err := apiClient.VnicApi.CreateVnicEthQosPolicy(ctx).VnicEthQosPolicy(*ethQosPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}
@@ -194,7 +194,7 @@ func CreateVnicLanConnectivityPolicy(config *Config) string {
 	
 	ifMatch := ""
 	ifNoneMatch := ""
-	respLan, r, err := apiClient.VnicApi.CreateVnicLanConnectivityPolicy(ctx).VnicLanConnectivityPolicy(*vniclanConnectivityPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	respLan, _, err := apiClient.VnicApi.CreateVnicLanConnectivityPolicy(ctx).VnicLanConnectivityPolicy(*vniclanConnectivityPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}
@@ -256,7 +256,7 @@ func CreateVnicEthIf(config *Config) string {
 	
 	ifMatch := ""
 	ifNoneMatch := ""
-	ethIfResp, r, err := apiClient.VnicApi.CreateVnicEthIf(ctx).VnicEthIf(*ethIf).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	ethIfResp, _, err := apiClient.VnicApi.CreateVnicEthIf(ctx).VnicEthIf(*ethIf).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

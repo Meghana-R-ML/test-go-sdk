@@ -116,7 +116,7 @@ func CreateVnicFcAdapterPolicy(config *Config) string {
 
 	ifMatch := ""
 	ifNoneMatch := ""
-	adapterResp, r, err := apiClient.VnicApi.CreateVnicFcAdapterPolicy(ctx).VnicFcAdapterPolicy(*fcAdapterPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	adapterResp, _, err := apiClient.VnicApi.CreateVnicFcAdapterPolicy(ctx).VnicFcAdapterPolicy(*fcAdapterPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}
@@ -144,7 +144,7 @@ func CreateVnicFcNetworkPolicy(config *Config) string {
 	
 	ifMatch := ""
 	ifNoneMatch := ""
-	networkResp, r, err := apiClient.VnicApi.CreateVnicFcNetworkPolicy(ctx).VnicFcNetworkPolicy(*fcNetworkPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	networkResp, _, err := apiClient.VnicApi.CreateVnicFcNetworkPolicy(ctx).VnicFcNetworkPolicy(*fcNetworkPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}
@@ -169,7 +169,7 @@ func CreateVnicFcQosPolicy(config *Config) string {
 	
 	ifMatch := ""
 	ifNoneMatch := ""
-	qosResp, r, err := apiClient.VnicApi.CreateVnicFcQosPolicy(ctx).VnicFcQosPolicy(*fcQosPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	qosResp, _, err := apiClient.VnicApi.CreateVnicFcQosPolicy(ctx).VnicFcQosPolicy(*fcQosPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}
@@ -191,7 +191,7 @@ func CreateVnicSanConnectivityPolicy(config *Config) string {
 	
 	ifMatch := ""
 	ifNoneMatch := ""
-	sanResp, r, err := apiClient.VnicApi.CreateVnicSanConnectivityPolicy(ctx).VnicSanConnectivityPolicy(*sanConnectivityPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	sanResp, _, err := apiClient.VnicApi.CreateVnicSanConnectivityPolicy(ctx).VnicSanConnectivityPolicy(*sanConnectivityPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}
@@ -232,7 +232,7 @@ func CreateVnicFcIf(config *Config) string{
 	
 	ifMatch := ""
 	ifNoneMatch := ""
-	fcIfResp, r, err := apiClient.VnicApi.CreateVnicFcIf(ctx).VnicFcIf(*fcIf).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	fcIfResp, _, err := apiClient.VnicApi.CreateVnicFcIf(ctx).VnicFcIf(*fcIf).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}
