@@ -71,7 +71,7 @@ func CreateObject(config *Config) {
                 return
 	}
 	org_moid := org_list[0].MoBaseMo.GetMoid()
-	log.Printf("Organization moid: %v, %v\n", org_resp, r)
+	log.Printf("Organization moid: %v\n", org_moid)
 	bootLocalCdd := createBootLocalCdd()
 	bootLocalDisk := createBootLocalDisk()
 	organizationRelationship := getOrganizationRelationship(org_moid)
