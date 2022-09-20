@@ -7,11 +7,6 @@ import (
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
-config := Config{
-        ApiKey:    apiKey,
-        SecretKey: secret,
-        Endpoint:  host,
-}
 
 type Config struct {
 	ApiKey    string
@@ -20,6 +15,8 @@ type Config struct {
 	ApiClient *intersight.APIClient
 	ctx       context.Context
 }
+
+var config = Config{ApiKey: apiKey, SecretKey: secret, Endpoint: host,}
 
 func ExecutePolicies(apiKey string, secret string, host string) {
 
