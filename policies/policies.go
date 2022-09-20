@@ -129,6 +129,7 @@ func getDefaultOrgMoid() string {
 }
 
 func getPolicyRelationship(policy string) intersight.PolicyAbstractPolicyRelationship {
+	var policy_moid string
 	switch policy {
 		case "adapter.ConfigPolicy":
 			policy_moid = CreateAdapterPolicy(&config)
@@ -157,6 +158,7 @@ func getPolicyRelationship(policy string) intersight.PolicyAbstractPolicyRelatio
 		case "storage.StoragePolicy":
 			policy_moid = CreateStorageStoragePolicy(&config)
 		case "storage.DriveGroup":
+			storageMoid := CreateStorageStoragePolicy(&config)
 			policy_moid = CreateSorageDriveGroup(&config,storageMoid)
 		case "vmedia.Policy":
 			policy_moid = CreateVmediaPolicy(&config)
