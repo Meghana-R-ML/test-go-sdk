@@ -59,14 +59,14 @@ func CreateObject(config *Config) {
 	apiClient := cfg.ApiClient
 	ctx := cfg.ctx
 
-//	org_resp, r, org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
-//	if org_err != nil {
-//		log.Printf("Error: %v\n", err)
-//                log.Printf("HTTP response: %v\n", r)
-//                return	
-//	}
+	org_resp, r, org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
+	if org_err != nil {
+		log.Printf("Error: %v\n", err)
+                log.Printf("HTTP response: %v\n", r)
+                return	
+	}
 //	org_moid := org_resp.GetMoid()
-//	log.Printf("Organization moid: %v\n", org_moid)
+	log.Printf("Organization moid: %v, %v\n", org_resp, r)
 	org_moid := ""
 	bootLocalCdd := createBootLocalCdd()
 	bootLocalDisk := createBootLocalDisk()
