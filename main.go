@@ -2,7 +2,6 @@ package main
 
 import (
 	example "test-go-sdk/Examples"
-	policy "test-go-sdk/policies"
 )
 
 func main() {
@@ -12,5 +11,4 @@ func main() {
 
 
 	example.ExecuteExamples(keyID, keyFile, host)
-	policy.ExecutePolicies(keyID, keyFile, host)
 }
