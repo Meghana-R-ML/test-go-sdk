@@ -8,25 +8,6 @@ import (
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
-func createOrganizationRelationship(moid string) intersight.OrganizationOrganizationRelationship {
-	organization := new(intersight.OrganizationOrganization)
-	organization.ClassId = "mo.MoRef"
-	organization.ObjectType = "organization.Organization"
-	organization.Moid = &moid
-	organizationRelationship := intersight.OrganizationOrganizationAsOrganizationOrganizationRelationship(organization)
-	return organizationRelationship
-}
-
-func ReturnSyslogPolicyAbstractPolicyRelationship(config *Config) intersight.PolicyAbstractPolicyRelationship {
-	moid := CreateSyslogPolicy(config)
-	syslogPolicy1 := new(intersight.PolicyAbstractPolicy)
-	syslogPolicy1.SetClassId("mo.MoRef")
-	syslogPolicy1.ObjectType("syslog.Policy")
-	syslogPolicy1.SetMoid(moid)
-	syslogPolicyRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(syslogPolicy1)
-	return syslogPolicyRelationship
-}
-
 func CreateSyslogPolicy(config *Config) string {
 	var err error
 	cfg := getApiClient(config)
@@ -58,12 +39,8 @@ func CreateSyslogPolicy(config *Config) string {
 	localClients := []intersight.SyslogLocalClientBase{*localClient1}
 	syslogPolicy.SetLocalClients(localClients)
 	
-	org_resp,_,org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
-	if org_err != nil {
-		log.Fatalf("Error: %v\n", org_err)
-	}
-	orgMoid := org_resp.GetMoid()
-	organizationRelationship := createOrganizationRelationship(orgMoid)
+	org_moid := getDefaultOrgMoid()
+	organizationRelationship := getOrganizationRelationship(org_moid)
 	syslogPolicy.SetOrganization(organizationRelationship)
 
 	ifMatch := ""

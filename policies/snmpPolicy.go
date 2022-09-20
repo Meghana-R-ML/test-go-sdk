@@ -31,25 +31,6 @@ func createSnmpUser() *intersight.SnmpUser {
 	return snmpUser
 }
 
-func createOrganizationRelationship(moid string) intersight.OrganizationOrganizationRelationship {
-	organization := new(intersight.OrganizationOrganization)
-	organization.ClassId = "mo.MoRef"
-	organization.ObjectType = "organization.Organization"
-	organization.Moid = &moid
-	organizationRelationship := intersight.OrganizationOrganizationAsOrganizationOrganizationRelationship(organization)
-	return organizationRelationship
-}
-
-func ReturnSnmpPolicyAbstractPolicyRelationship(config *Config) intersight.PolicyAbstractPolicyRelationship {
-	moid := CreateSnmpPolicy(config)
-	snmpPolicy1 := new(intersight.PolicyAbstractPolicy)
-	snmpPolicy1.SetClassId("mo.MoRef")
-	snmpPolicy1.ObjectType("snmp.Policy")
-	snmpPolicy1.SetMoid(moid)
-	snmpPolicyRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(snmpPolicy1)
-	return snmpPolicyRelationship
-}
-
 func CreateSnmpPolicy(config *Config) string {
 	var err error
 	cfg := getApiClient(config)
@@ -73,12 +54,8 @@ func CreateSnmpPolicy(config *Config) string {
 	snmpUsers := []intersight.SnmpUser{*snmpUser1}
 	snmpPolicy.SetSnmpUsers(snmpUsers)
 
-	org_resp,_,org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
-	if org_err != nil {
-		log.Fatalf("Error: %v\n", org_err)
-	}
-	orgMoid := org_resp.GetMoid()
-	organizationRelationship := createOrganizationRelationship(orgMoid)
+	org_moid := getDefaultOrgMoid()
+	organizationRelationship := getOrganizationRelationship(org_moid)
 	snmpPolicy.SetOrganization(organizationRelationship)
 
 	ifMatch := ""

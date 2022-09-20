@@ -22,14 +22,81 @@ func ExecutePolicies(apiKey string, secret string, host string) {
 		Endpoint:  host,
 	}
 
-	CreateAdapterPolicy(&config)
-	CreateDeviceConnectorPolicy(&config)
-	CreateLdapPolicy(&config)
-	CreateIpmiPolicy(&config)
-	CreateKvmPolicy(&config)
-	CreateNetworkConfigPolicy(&config)
-	CreateNtpPolicy(&config)
-	CreateSdCardPolicy(&config)
+	adapterconfigPolicyRelationship := getPolicyRelationship("adapter.ConfigPolicy")
+	log.Printf("adapterconfigPolicy response: %v\n", adapterconfigPolicyRelationship)
+	
+	deviceconnectorPolicyRelationship := getPolicyRelationship("deviceconnector.Policy")
+	log.Printf("deviceconnector response: %v\n", deviceconnectorPolicyRelationship)
+	
+	ldapPolicyRelationship := getPolicyRelationship("iam.LdapPolicy")
+	log.Printf("ldapPolicy response: %v\n", ldapPolicyRelationship)
+	
+	ipmiPolicyRelationship := getPolicyRelationship("ipmioverlan.Policy")
+	log.Printf("ipmiPolicy response: %v\n", ipmiPolicyRelationship)
+	
+	kvmPolicyRelationship := getPolicyRelationship("kvm.Policy")
+	log.Printf("kvmPolicy response: %v\n", kvmPolicyRelationship)
+	
+	networkConfigPolicyRelationship := getPolicyRelationship("networkconfig.Policy")
+	log.Printf("networkConfigPolicy response: %v\n", networkConfigPolicyRelationship)
+	
+	ntpPolicyRelationship := getPolicyRelationship("ntp.Policy")
+	log.Printf("ntpPolicy response: %v\n", ntpPolicyRelationship)
+	
+	smtpPolicyRelationship := getPolicyRelationship("smtp.Policy")
+	log.Printf("smtpPolicy response: %v\n", smtpPolicyRelationship)
+	
+	snmpPolicyRelationship := getPolicyRelationship("snmp.Policy")
+	log.Printf("snmpPolicy response: %v\n", snmpPolicyRelationship)
+	
+	solPolicyRelationship := getPolicyRelationship("sol.Policy")
+	log.Printf("solPolicy response: %v\n", solPolicyRelationship)
+	
+	syslogPolicyRelationship := getPolicyRelationship("syslog.Policy")
+	log.Printf("syslogPolicy response: %v\n", syslogPolicyRelationship)
+	
+	userPolicyRelationship := getPolicyRelationship("iam.EndPointUserPolicy")
+	log.Printf("userPolicy response: %v\n", userPolicyRelationship)
+	
+	storagePolicyRelationship := getPolicyRelationship("storage.StoragePolicy")
+	log.Printf("storagePolicy response: %v\n", storagePolicyRelationship)
+	
+	storageDriveGroupRelationship := getPolicyRelationship("storage.DriveGroup")
+	log.Printf("storageDriveGroup response: %v\n", storageDriveGroupRelationship)
+	
+	vmediaPolicyRelationship := getPolicyRelationship("vmedia.Policy")
+	log.Printf("vmedia response: %v\n", vmediaPolicyRelationship)
+
+	ethAdapterPolicyRelationship := getPolicyRelationship("vnic.EthAdapterPolicy")
+	log.Printf("ethAdapterPolicy response: %v\n", ethAdapterPolicyRelationship)
+	
+	ethNetworkPolicyRelationship := getPolicyRelationship("vnic.EthNetworkPolicy")
+	log.Printf("ethNetworkPolicy response: %v\n", ethNetworkPolicyRelationship)
+
+	ethQosPolicyRelationship := getPolicyRelationship("vnic.EthQosPolicy")
+	log.Printf("ethQosPolicy response: %v\n", ethQosPolicyRelationship)
+
+	lanPolicyRelationship := getPolicyRelationship("vnic.LanConnectivityPolicy")
+	log.Printf("lanPolicy response: %v\n", lanPolicyRelationship)
+
+	ethIfPolicyRelationship := getPolicyRelationship("vnic.EthIf")
+	log.Printf("ethIfPolicy response: %v\n", ethIfPolicyRelationship)
+	
+	fcAdapterPolicyRelationship := getPolicyRelationship("vnic.FcAdapterPolicy")
+	log.Printf("fcAdapterPolicy response: %v\n", fcAdapterPolicyRelationship)
+
+	fcNetworkPolicyRelationship := getPolicyRelationship("vnic.FcNetworkPolicy")
+	log.Printf("fcNetworkPolicy response: %v\n", fcNetworkPolicyRelationship)
+	
+	fcQosPolicyRelationship := getPolicyRelationship("vnic.FcQosPolicy")
+	log.Printf("fcQosPolicy response: %v\n", fcQosPolicyRelationship)
+	
+	sanPolicyRelationship := getPolicyRelationship("vnic.SanConnectivityPolicy")
+	log.Printf("sanPolicy response: %v\n", sanPolicyRelationship)
+	
+	fcIfPolicyRelationship := getPolicyRelationship("vnic.FcIf")
+	log.Printf("fcIfPolicy response: %v\n", fcIfPolicyRelationship)
+	
 }
 
 func getOrganizationRelationship(moid string) intersight.OrganizationOrganizationRelationship {
@@ -63,11 +130,58 @@ func getDefaultOrgMoid() string {
 
 func getPolicyRelationship(policy string) intersight.PolicyAbstractPolicyRelationship {
 	switch policy {
+		case "adapter.ConfigPolicy":
+			policy_moid = CreateAdapterPolicy(&config)
+		case "deviceconnector.Policy":
+			policy_moid = CreateDeviceConnectorPolicy(&config)
+		case "iam.LdapPolicy":
+			policy_moid = CreateLdapPolicy(&config)
+		case "ipmioverlan.Policy":
+			policy_moid = CreateIpmiPolicy(&config)
+		case "kvm.Policy":
+			policy_moid = CreateKvmPolicy(&config)
+		case "networkconfig.Policy":
+			policy_moid = CreateNetworkConfigPolicy(&config)
+		case "ntp.Policy":
+			policy_moid = CreateNtpPolicy(&config)
+		case "smtp.Policy":
+			policy_moid = CreateSmtpPolicy(&config)
+		case "snmp.Policy":
+			policy_moid = CreateSnmpPolicy(&config)
+		case "sol.Policy":
+			policy_moid = CreateSolPolicy(&config)
+		case "syslog.Policy":
+			policy_moid = CreateSyslogPolicy(&config)
+		case "iam.EndPointUserPolicy":
+			policy_moid = CreateIamEndPointUserPolicy(&config)
+		case "storage.StoragePolicy":
+			policy_moid = CreateStorageStoragePolicy(&config)
+		case "storage.DriveGroup":
+			policy_moid = CreateSorageDriveGroup(&config,storageMoid)
 		case "vmedia.Policy":
 			policy_moid = CreateVmediaPolicy(&config)
+		case "vnic.EthAdapterPolicy":
+			policy_moid = CreateVnicEthAdapterPolicy(&config)
 		case "vnic.EthNetworkPolicy":
+			policy_moid = CreateVnicEthNetworkPolicy(&config)
+		case "vnic.EthQosPolicy":
+			policy_moid = CreateVnicEthQosPolicy(&config)
+		case "vnic.LanConnectivityPolicy":
+			policy_moid = CreateVnicLanConnectivityPolicy(&config)
+		case "vnic.EthIf":
 			policy_moid = CreateVnicEthIf(&config)
+		case "vnic.FcAdapterPolicy":
+			policy_moid = CreateVnicFcAdapterPolicy(&config)
+		case "vnic.FcNetworkPolicy":
+			policy_moid = CreateVnicFcNetworkPolicy(&config)
+		case "vnic.FcQosPolicy":
+			policy_moid = CreateVnicFcQosPolicy(&config)
+		case "vnic.SanConnectivityPolicy":
+			policy_moid = CreateVnicSanConnectivityPolicy(&config)
+		case "vnic.FcIf":
+			policy_moid = CreateVnicFcIf(&config)	
 	}
+	
 	policy := new(intersight.PolicyAbstractPolicy)
 	policy.SetClassId("mo.MoRef")
 	policy.ObjectType(policy)

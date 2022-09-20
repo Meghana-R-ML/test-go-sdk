@@ -14,7 +14,7 @@ func setProfiles() []string {
 	return profiles
 }
 
-func CreateNtpPolicy() {
+func CreateNtpPolicy(config *Config) {
 	var err error
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient

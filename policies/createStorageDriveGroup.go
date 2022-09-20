@@ -33,16 +33,6 @@ func createStoragePolicyRelationship(moid string) intersight.StorageStoragePolic
 	return storageRelationship
 }
 
-func ReturnPolicyAbstractPolicyRelationshipStorageDriveGroup(config *Config, storageMoid sting) intersight.PolicyAbstractPolicyRelationship {
-	moid := CreateSorageDriveGroup(config,storageMoid)
-	storageDriveGroup1 := new(intersight.PolicyAbstractPolicy)
-	storageDriveGroup1.SetClassId("mo.MoRef")
-	storageDriveGroup1.ObjectType("storage.DriveGroup")
-	storageDriveGroup1.SetMoid(moid)
-	storageDriveGroupRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(storageDriveGroup1)
-	return storageDriveGroupRelationship
-}
-
 func CreateSorageDriveGroup(config *Config, storageMoid string) string {
 	var err error
 	cfg := getApiClient(config)

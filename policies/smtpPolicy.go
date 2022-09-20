@@ -8,25 +8,6 @@ import (
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
-func createOrganizationRelationship(moid string) intersight.OrganizationOrganizationRelationship {
-	organization := new(intersight.OrganizationOrganization)
-	organization.ClassId = "mo.MoRef"
-	organization.ObjectType = "organization.Organization"
-	organization.Moid = &moid
-	organizationRelationship := intersight.OrganizationOrganizationAsOrganizationOrganizationRelationship(organization)
-	return organizationRelationship
-}
-
-func ReturnSmtpPolicyAbstractPolicyRelationship(config *Config) intersight.PolicyAbstractPolicyRelationship {
-	moid := CreateSmtpPolicy(config)
-	smtpPolicy1 := new(intersight.PolicyAbstractPolicy)
-	smtpPolicy1.SetClassId("mo.MoRef")
-	smtpPolicy1.ObjectType("smtp.Policy")
-	smtpPolicy1.SetMoid(moid)
-	smtpPolicyRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(smtpPolicy1)
-	return smtpPolicyRelationship
-}
-
 func CreateSmtpPolicy(config *Config) string {
 	var err error
 	cfg := getApiClient(config)
@@ -44,12 +25,8 @@ func CreateSmtpPolicy(config *Config) string {
     "cy@cisco.com",
     "dz@cisco.com"}
 	smtpPolicy.SetSmtpRecipients(smtpRecipients)
-	org_resp,_,org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
-	if org_err != nil {
-		log.Fatalf("Error: %v\n", org_err)
-	}
-	orgMoid := org_resp.GetMoid()
-	organizationRelationship := createOrganizationRelationship(orgMoid)
+	org_moid := getDefaultOrgMoid()
+	organizationRelationship := getOrganizationRelationship(org_moid)
 	smtpPolicy.SetOrganization(organizationRelationship)
 
 	ifMatch := ""

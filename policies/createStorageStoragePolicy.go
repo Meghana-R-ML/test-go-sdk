@@ -8,25 +8,6 @@ import (
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
-func createOrganizationRelationship(moid string) intersight.OrganizationOrganizationRelationship {
-	organization := new(intersight.OrganizationOrganization)
-	organization.ClassId = "mo.MoRef"
-	organization.ObjectType = "organization.Organization"
-	organization.Moid = &moid
-	organizationRelationship := intersight.OrganizationOrganizationAsOrganizationOrganizationRelationship(organization)
-	return organizationRelationship
-}
-
-func ReturnPolicyAbstractPolicyRelationshipStoragePolicy(config *Config) intersight.PolicyAbstractPolicyRelationship, string {
-	moid := CreateStorageStoragePolicy(config)
-	storagePolicy := new(intersight.PolicyAbstractPolicy)
-	storagePolicy.SetClassId("mo.MoRef")
-	storagePolicy.ObjectType("storage.DriveGroup")
-	storagePolicy.SetMoid(moid)
-	storagePolicyRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(storagePolicy)
-	return storagePolicyRelationship,moid
-}
-
 func CreateStorageStoragePolicy(config *Config) string{
 	var err error
 	cfg := getApiClient(config)
@@ -45,12 +26,8 @@ func CreateStorageStoragePolicy(config *Config) string{
 	m2Virtual1 := m2VirtualDrive1.Get()
 	storageStoragePolicy.SetM2VirtualDrive(*m2Virtual1)
 	
-	org_resp,_,org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
-	if org_err != nil {
-		log.Fatalf("Error: %v\n", org_err)
-	}
-	orgMoid := org_resp.GetMoid()
-	organizationRelationship := createOrganizationRelationship(orgMoid)
+	org_moid := getDefaultOrgMoid()
+	organizationRelationship := getOrganizationRelationship(org_moid)
 	storageStoragePolicy.SetOrganization(organizationRelationship)
 
 	ifMatch := ""

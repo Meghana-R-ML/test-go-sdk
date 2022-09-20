@@ -10,65 +10,6 @@ import (
 
 var adapterPolicyMoid, ethNetworkMoid, qosMoid, lanConnectivityMoid string
 
-func createOrganizationRelationship(moid string) intersight.OrganizationOrganizationRelationship {
-	organization := new(intersight.OrganizationOrganization)
-	organization.ClassId = "mo.MoRef"
-	organization.ObjectType = "organization.Organization"
-	organization.Moid = &moid
-	organizationRelationship := intersight.OrganizationOrganizationAsOrganizationOrganizationRelationship(organization)
-	return organizationRelationship
-}
-
-func ReturnEthAdapterPolicyAbstractPolicyRelationship(config *Config) intersight.PolicyAbstractPolicyRelationship {
-	moid := CreateVnicEthAdapterPolicy(config)
-	ethAdapterPolicy := new(intersight.PolicyAbstractPolicy)
-	ethAdapterPolicy.SetClassId("mo.MoRef")
-	ethAdapterPolicy.ObjectType("vnic.EthAdapterPolicy")
-	ethAdapterPolicy.SetMoid(moid)
-	adapterPolicyRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(ethAdapterPolicy)
-	return adapterPolicyRelationship
-}
-
-func ReturnEthNetworkPolicyAbstractPolicyRelationship(config *Config) intersight.PolicyAbstractPolicyRelationship {
-	moid := CreateVnicEthNetworkPolicy(config)
-	networkPolicy1 := new(intersight.PolicyAbstractPolicy)
-	networkPolicy1.SetClassId("mo.MoRef")
-	networkPolicy1.ObjectType("vnic.EthNetworkPolicy")
-	networkPolicy1.SetMoid(moid)
-	networkPolicyRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(networkPolicy1)
-	return networkPolicyRelationship
-}
-
-func ReturnEthQosPolicyAbstractPolicyRelationship(config *Config) intersight.PolicyAbstractPolicyRelationship {
-	moid := CreateVnicEthQosPolicy(config)
-	qosPolicy1 := new(intersight.PolicyAbstractPolicy)
-	qosPolicy1.SetClassId("mo.MoRef")
-	qosPolicy1.ObjectType("vnic.EthQosPolicy")
-	qosPolicy1.SetMoid(moid)
-	qosPolicyRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(qosPolicy1)
-	return qosPolicyRelationship
-}
-
-func ReturnLanPolicyAbstractPolicyRelationship(config *Config) intersight.PolicyAbstractPolicyRelationship {
-	moid := CreateVnicEthLanConnectivityPolicy(config)
-	lanConnectivityPolicy := new(intersight.PolicyAbstractPolicy)
-	lanConnectivityPolicy.SetClassId("mo.MoRef")
-	lanConnectivityPolicy.ObjectType("vnic.LanConnectivityPolicy")
-	lanConnectivityPolicy.SetMoid(moid)
-	lanConnectivityPolicyRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(lanConnectivityPolicy)
-	return lanConnectivityPolicyRelationship
-}
-
-func ReturnEthIfPolicyAbstractPolicyRelationship(config *Config) intersight.PolicyAbstractPolicyRelationship {
-	moid := CreateVnicEthIf(config)
-	ethIf1 := new(intersight.PolicyAbstractPolicy)
-	ethIf1.SetClassId("mo.MoRef")
-	ethIf1.ObjectType("vnic.EthIf")
-	ethIf1.SetMoid(moid)
-	ethIfRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(ethIf1)
-	return ethIfRelationship
-}
-
 func createEthAdapterPolicyRelationship(moid string) intersight.VnicEthAdapterPolicyRelationship {
 	adapterPolicy := new(intersight.VnicEthAdapterPolicy)
 	adapterPolicy.ClassId = "mo.MoRef"
@@ -172,12 +113,8 @@ func CreateVnicEthAdapterPolicy(config *Config) string {
 	tcpOffloadSettings := tcpOffloadSetting.Get()
 	ethadapterPolicy.SetTcpOffloadSettings(*tcpOffloadSettings)
 	
-	org_resp,_,org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
-	if org_err != nil {
-		log.Fatalf("Error: %v\n", org_err)
-	}
-	orgMoid := org_resp.GetMoid()
-	organizationRelationship := createOrganizationRelationship(orgMoid)
+	org_moid := getDefaultOrgMoid()
+	organizationRelationship := getOrganizationRelationship(org_moid)
 	ethadapterPolicy.SetOrganization(organizationRelationship)
 
 	ifMatch := ""
@@ -200,12 +137,8 @@ func CreateVnicEthNetworkPolicy(config *Config) string {
 	ethNetworkPolicy := intersight.NewVnicEthNetworkPolicyWithDefaults()
 	ethNetworkPolicy.PolicyAbstractPolicy.SetName("v_eth_network_test")
 	
-	org_resp,_,org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
-	if org_err != nil {
-		log.Fatalf("Error: %v\n", org_err)
-	}
-	orgMoid := org_resp.GetMoid()
-	organizationRelationship := createOrganizationRelationship(orgMoid)
+	org_moid := getDefaultOrgMoid()
+	organizationRelationship := getOrganizationRelationship(org_moid)
 	ethNetworkPolicy.SetOrganization(organizationRelationship)
 	
 	vlanSettingsVal := intersight.NewVnicVlanSettingsWithDefaults()
@@ -240,12 +173,8 @@ func CreateVnicEthQosPolicy(config *Config) string {
 	ethQosPolicy.SetCos(int64(0))
 	ethQosPolicy.SetTrustHostCos(false)
 	
-	org_resp,_,org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
-	if org_err != nil {
-		log.Fatalf("Error: %v\n", org_err)
-	}
-	orgMoid := org_resp.GetMoid()
-	organizationRelationship := createOrganizationRelationship(orgMoid)
+	org_moid := getDefaultOrgMoid()
+	organizationRelationship := getOrganizationRelationship(org_moid)
 	ethQosPolicy.SetOrganization(organizationRelationship)
 	
 	ifMatch := ""
@@ -260,25 +189,21 @@ func CreateVnicEthQosPolicy(config *Config) string {
 	return qosMoid
 }
 
-func CreateVnicEthLanConnectivityPolicy(config *Config) string {
+func CreateVnicLanConnectivityPolicy(config *Config) string {
 	var err error
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
 	ctx := cfg.ctx
-	ethlanConnectivityPolicy := intersight.NewVnicLanConnectivityPolicyWithDefaults()
-	ethlanConnectivityPolicy.PolicyAbstractPolicy.SetName("vnic_lan_test")
+	vniclanConnectivityPolicy := intersight.NewVnicLanConnectivityPolicyWithDefaults()
+	vniclanConnectivityPolicy.PolicyAbstractPolicy.SetName("vnic_lan_test")
 	
-	org_resp,_,org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
-	if org_err != nil {
-		log.Fatalf("Error: %v\n", org_err)
-	}
-	orgMoid := org_resp.GetMoid()
-	organizationRelationship := createOrganizationRelationship(orgMoid)
-	ethlanConnectivityPolicy.SetOrganization(organizationRelationship)
+	org_moid := getDefaultOrgMoid()
+	organizationRelationship := getOrganizationRelationship(org_moid)
+	vniclanConnectivityPolicy.SetOrganization(organizationRelationship)
 	
 	ifMatch := ""
 	ifNoneMatch := ""
-	respLan, r, err := apiClient.VnicApi.CreateVnicEthLanConnectivityPolicy(ctx).VnicLanConnectivityPolicy(*ethlanConnectivityPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	respLan, r, err := apiClient.VnicApi.CreateVnicLanConnectivityPolicy(ctx).VnicLanConnectivityPolicy(*vniclanConnectivityPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 		log.Fatalf("HTTP response: %v\n", r)

@@ -8,25 +8,6 @@ import (
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
 
-func createOrganizationRelationship(moid string) intersight.OrganizationOrganizationRelationship {
-	organization := new(intersight.OrganizationOrganization)
-	organization.ClassId = "mo.MoRef"
-	organization.ObjectType = "organization.Organization"
-	organization.Moid = &moid
-	organizationRelationship := intersight.OrganizationOrganizationAsOrganizationOrganizationRelationship(organization)
-	return organizationRelationship
-}
-
-func ReturnUserPolicyAbstractPolicyRelationship(config *Config) intersight.PolicyAbstractPolicyRelationship {
-	moid := CreateIamEndPointUserPolicy(config)
-	userPolicy1 := new(intersight.PolicyAbstractPolicy)
-	userPolicy1.SetClassId("mo.MoRef")
-	userPolicy1.ObjectType("iam.EndPointUserPolicy")
-	userPolicy1.SetMoid(moid)
-	userPolicyRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(userPolicy1)
-	return userPolicyRelationship
-}
-
 func CreateIamEndPointUserPolicy(config *Config) string {
 	var err error
 	cfg := getApiClient(config)
@@ -46,12 +27,8 @@ func CreateIamEndPointUserPolicy(config *Config) string {
 	passproperties := intersight.NewNullableIamEndPointPasswordProperties(passwordPropertiesVal)
 	passwordProperties := passproperties.Get()
 	userPolicy.SetPasswordProperties(*passwordProperties)
-	org_resp,_,org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
-	if org_err != nil {
-		log.Fatalf("Error: %v\n", org_err)
-	}
-	orgMoid := org_resp.GetMoid()
-	organizationRelationship := createOrganizationRelationship(orgMoid)
+	org_moid := getDefaultOrgMoid()
+	organizationRelationship := getOrganizationRelationship(org_moid)
 	userPolicy.SetOrganization(organizationRelationship)
 	
 
