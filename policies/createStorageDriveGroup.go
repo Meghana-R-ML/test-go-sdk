@@ -2,8 +2,6 @@ package policy
 
 import (
 	"log"
-	"fmt"
-	"os"
 
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
@@ -78,9 +76,7 @@ func CreateSorageDriveGroup(config *Config, storageMoid string) string {
 	resp, r, err := apiClient.StorageApi.CreateStorageDriveGroup(ctx).StorageDriveGroup(*storageDriveGroup).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
-		log.Fatalf("HTTP response: %v\n", r)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", resp)
 	moid := resp.GetMoid()
 	return moid
 }

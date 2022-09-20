@@ -2,8 +2,6 @@ package policy
 
 import (
 	"log"
-	"fmt"
-	"os"
 
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
@@ -245,9 +243,7 @@ func CreateVnicFcIf(config *Config) string{
 	fcIfResp, r, err := apiClient.VnicApi.CreateVnicFcIf(ctx).VnicFcIf(*fcIf).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
-		log.Fatalf("HTTP response: %v\n", r)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", fcIfResp)
 	moid := fcIfResp.GetMoid()
 	return moid
 }

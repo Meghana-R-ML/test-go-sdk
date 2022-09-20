@@ -1,9 +1,7 @@
 package policy
 
 import (
-	"fmt"
 	"log"
-	"os"
 
 	intersight "github.com/CiscoDevNet/intersight-go"
 )

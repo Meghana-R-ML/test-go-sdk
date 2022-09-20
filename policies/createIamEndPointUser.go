@@ -2,8 +2,6 @@ package policy
 
 import (
 	"log"
-	"fmt"
-	"os"
 
 	intersight "github.com/CiscoDevNet/intersight-go"
 )
@@ -37,9 +35,7 @@ func CreateIamEndPointUserPolicy(config *Config) string {
 	resp, r, err := apiClient.IamApi.CreateIamEndPointUserPolicy(ctx).IamEndPointUserPolicy(*userPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
-		log.Fatalf("HTTP response: %v\n", r)
 	}
-	fmt.Fprintf(os.Stdout, "Response: %v\n", resp)
 	moid := resp.GetMoid()
 	return moid
 }
