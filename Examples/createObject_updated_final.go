@@ -48,7 +48,7 @@ func getOrganizationRelationship(moid string) intersight.OrganizationOrganizatio
 	organization := new(intersight.OrganizationOrganization)
 	organization.ClassId = "mo.MoRef"
 	organization.ObjectType = "organization.Organization"
-	organization.Moid = moid
+	organization.Moid = &moid
 	organizationRelationship := intersight.OrganizationOrganizationAsOrganizationOrganizationRelationship(organization)
 	return organizationRelationship
 }
@@ -72,7 +72,6 @@ func CreateObject(config *Config) {
 	}
 	org_moid := org_list[0].MoBaseMo.GetMoid()
 	log.Printf("Organization moid: %v, %v\n", org_resp, r)
-	org_moid := ""
 	bootLocalCdd := createBootLocalCdd()
 	bootLocalDisk := createBootLocalDisk()
 	organizationRelationship := getOrganizationRelationship(org_moid)
