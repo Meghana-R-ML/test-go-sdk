@@ -17,7 +17,7 @@ func CreateNetworkConfigPolicy(config *Config) string {
 	networkConfigPolicy.SetName("tf_network_config1_sdk")
 	networkConfigPolicy.SetDescription("test policy")
 	networkConfigPolicy.SetEnableDynamicDns(false)
-	networkConfigPolicy.SetPreferredIpv4dnsServer("::")
+	networkConfigPolicy.SetPreferredIpv6dnsServer("::")
 	networkConfigPolicy.SetEnableIpv6(true)
 	networkConfigPolicy.SetEnableIpv6dnsFromDhcp(false)
 	networkConfigPolicy.SetPreferredIpv4dnsServer("10.10.10.1")
