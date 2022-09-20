@@ -59,7 +59,7 @@ func CreateObject(config *Config) {
 	apiClient := cfg.ApiClient
 	ctx := cfg.ctx
 
-	org_resp, _, org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
+	org_resp, r, org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
 	if org_err != nil {
 		log.Printf("Error: %v\n", err)
                 log.Printf("HTTP response: %v\n", r)
@@ -91,7 +91,6 @@ func CreateObject(config *Config) {
 
 	//Update
 	id := resp.GetMoid()
-	log.Printf("Get moid from response : %v\n", id)
 	getapiResponse, r, err := apiClient.BootApi.GetBootPrecisionPolicyByMoid(ctx, id).Execute()
 	if err != nil {
 		// 		fmt.Fprintf(os.Stderr, "Error -> GetBootPrecisionPolicyByMoid: %v\n", err)
@@ -101,6 +100,7 @@ func CreateObject(config *Config) {
 		return
 	}
 	objMoid := getapiResponse.GetMoid()
+	log.Printf("Get moid from response : %v\n", objMoid)
 	organizationMoid := getapiResponse.GetOrganization().MoMoRef.GetMoid()
 	bootSdcard := createBootSdcard()
 	bootIscsi := createBootIscsi()
