@@ -32,7 +32,7 @@ func CreateIamEndPointUserPolicy(config *Config) string {
 
 	ifMatch := ""
 	ifNoneMatch := ""
-	resp, r, err := apiClient.IamApi.CreateIamEndPointUserPolicy(ctx).IamEndPointUserPolicy(*userPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
+	resp, _, err := apiClient.IamApi.CreateIamEndPointUserPolicy(ctx).IamEndPointUserPolicy(*userPolicy).IfMatch(ifMatch).IfNoneMatch(ifNoneMatch).Execute()
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}

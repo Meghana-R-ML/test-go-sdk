@@ -18,7 +18,7 @@ func setPartitions() *intersight.SdcardPartition {
 	partitions.SetType("OS")
 	partitions.SetObjectType("sdcard.Partition")
 	virtualDrive := createVirtualDrives()
-	virtualDrives := []intersight.SdcardPartition{*virtualDrive}
+	virtualDrives := []intersight.SdcardVirtualDrive{*virtualDrive}
 	partitions.SetVirtualDrives(virtualDrives)
 	return partitions
 }
