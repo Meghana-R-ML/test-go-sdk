@@ -47,7 +47,7 @@ func CreateAdapterPolicy(config *Config) string {
 	settings := setSettings()
 	settingsMlom := setSettingsMlom()
 	settingsArr := []intersight.AdapterAdapterConfig{*settings, *settingsMlom}
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	adapterConfigPolicy := intersight.NewAdapterConfigPolicyWithDefaults()
 	adapterConfigPolicy.SetSettings(settingsArr)

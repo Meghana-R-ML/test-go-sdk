@@ -111,7 +111,7 @@ func CreateVnicEthAdapterPolicy(config *Config) string {
 	tcpOffloadSettings := tcpOffloadSetting.Get()
 	ethadapterPolicy.SetTcpOffloadSettings(*tcpOffloadSettings)
 	
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	ethadapterPolicy.SetOrganization(organizationRelationship)
 
@@ -135,7 +135,7 @@ func CreateVnicEthNetworkPolicy(config *Config) string {
 	ethNetworkPolicy := intersight.NewVnicEthNetworkPolicyWithDefaults()
 	ethNetworkPolicy.PolicyAbstractPolicy.SetName("v_eth_network_test")
 	
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	ethNetworkPolicy.SetOrganization(organizationRelationship)
 	
@@ -171,7 +171,7 @@ func CreateVnicEthQosPolicy(config *Config) string {
 	ethQosPolicy.SetCos(int64(0))
 	ethQosPolicy.SetTrustHostCos(false)
 	
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	ethQosPolicy.SetOrganization(organizationRelationship)
 	
@@ -195,7 +195,7 @@ func CreateVnicLanConnectivityPolicy(config *Config) string {
 	vniclanConnectivityPolicy := intersight.NewVnicLanConnectivityPolicyWithDefaults()
 	vniclanConnectivityPolicy.PolicyAbstractPolicy.SetName("vnic_lan_test")
 	
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	vniclanConnectivityPolicy.SetOrganization(organizationRelationship)
 	

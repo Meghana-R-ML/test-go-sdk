@@ -12,7 +12,7 @@ func CreateIpmiPolicy(config *Config) string {
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
 	ctx := cfg.ctx
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
         organizationRelationship := getOrganizationRelationship(org_moid)
 	ipmiPolicy := intersight.NewIpmioverlanPolicyWithDefaults()
 	ipmiPolicy.SetName("tf_ipmi_sdk")

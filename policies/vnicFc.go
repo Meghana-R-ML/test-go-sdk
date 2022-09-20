@@ -110,7 +110,7 @@ func CreateVnicFcAdapterPolicy(config *Config) string {
 	scsiQueueSettings := scsiQueueSetting.Get()
 	fcAdapterPolicy.SetScsiQueueSettings(*scsiQueueSettings)
 	
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	fcAdapterPolicy.SetOrganization(organizationRelationship)
 
@@ -134,7 +134,7 @@ func CreateVnicFcNetworkPolicy(config *Config) string {
 	fcNetworkPolicy := intersight.NewVnicFcNetworkPolicyWithDefaults()
 	fcNetworkPolicy.PolicyAbstractPolicy.SetName("fc_network_test")
 	
-	oorg_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	fcNetworkPolicy.SetOrganization(organizationRelationship)
 	
@@ -167,7 +167,7 @@ func CreateVnicFcQosPolicy(config *Config) string {
 	fcQosPolicy.SetCos(int64(6))
 	fcQosPolicy.SetMaxDataFieldSize(int64(2112))
 	
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	fcQosPolicy.SetOrganization(organizationRelationship)
 	
@@ -191,7 +191,7 @@ func CreateVnicSanConnectivityPolicy(config *Config) string {
 	sanConnectivityPolicy := intersight.NewVnicSanConnectivityPolicyWithDefaults()
 	sanConnectivityPolicy.PolicyAbstractPolicy.SetName("vnic_san_test")
 	
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	sanConnectivityPolicy.SetOrganization(organizationRelationship)
 	

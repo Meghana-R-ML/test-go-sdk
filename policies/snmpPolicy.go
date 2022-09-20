@@ -52,7 +52,7 @@ func CreateSnmpPolicy(config *Config) string {
 	snmpUsers := []intersight.SnmpUser{*snmpUser1}
 	snmpPolicy.SetSnmpUsers(snmpUsers)
 
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	snmpPolicy.SetOrganization(organizationRelationship)
 

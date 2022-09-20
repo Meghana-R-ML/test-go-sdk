@@ -23,7 +23,7 @@ func CreateStorageStoragePolicy(config *Config) string{
 	m2Virtual1 := m2VirtualDrive1.Get()
 	storageStoragePolicy.SetM2VirtualDrive(*m2Virtual1)
 	
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	storageStoragePolicy.SetOrganization(organizationRelationship)
 

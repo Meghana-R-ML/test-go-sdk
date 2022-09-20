@@ -37,7 +37,7 @@ func CreateSyslogPolicy(config *Config) string {
 	localClients := []intersight.SyslogLocalClientBase{*localClient1}
 	syslogPolicy.SetLocalClients(localClients)
 	
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	syslogPolicy.SetOrganization(organizationRelationship)
 

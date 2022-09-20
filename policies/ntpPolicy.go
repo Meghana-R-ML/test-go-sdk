@@ -17,7 +17,7 @@ func CreateNtpPolicy(config *Config) string {
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
 	ctx := cfg.ctx
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
         organizationRelationship := getOrganizationRelationship(org_moid)
 	ntpPolicy := intersight.NewNtpPolicyWithDefaults()
 	ntpPolicy.SetName("tf_ntp1_sdk")

@@ -17,7 +17,7 @@ func CreateSolPolicy(config *Config) string {
 	solPolicy.SetBaudRate(int32(9600))
 	solPolicy.SetComPort("com1")
 	solPolicy.SetSshPort(int64(1096))
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	solPolicy.SetOrganization(organizationRelationship)
 
@@ -29,4 +29,4 @@ func CreateSolPolicy(config *Config) string {
 	}
 	moid := resp.GetMoid()
 	return moid
-}
+	}

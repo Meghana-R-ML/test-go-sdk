@@ -25,7 +25,7 @@ func CreateIamEndPointUserPolicy(config *Config) string {
 	passproperties := intersight.NewNullableIamEndPointPasswordProperties(passwordPropertiesVal)
 	passwordProperties := passproperties.Get()
 	userPolicy.SetPasswordProperties(*passwordProperties)
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	userPolicy.SetOrganization(organizationRelationship)
 	

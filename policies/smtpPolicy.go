@@ -23,7 +23,7 @@ func CreateSmtpPolicy(config *Config) string {
     "cy@cisco.com",
     "dz@cisco.com"}
 	smtpPolicy.SetSmtpRecipients(smtpRecipients)
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	smtpPolicy.SetOrganization(organizationRelationship)
 

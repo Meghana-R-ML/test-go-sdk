@@ -11,7 +11,7 @@ func CreateNetworkConfigPolicy(config *Config) string {
 	cfg := getApiClient(config)
 	apiClient := cfg.ApiClient
 	ctx := cfg.ctx
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
         organizationRelationship := getOrganizationRelationship(org_moid)
 	networkConfigPolicy := intersight.NewNetworkconfigPolicyWithDefaults()
 	networkConfigPolicy.SetName("tf_network_config1_sdk")

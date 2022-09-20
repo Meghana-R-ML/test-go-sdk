@@ -18,7 +18,7 @@ func CreateVmediaPolicy(config *Config) string {
 	vmediaPolicy.SetEncryption(true)
 	vmediaPolicy.SetLowPowerUsb(true)
 	
-	org_moid := getDefaultOrgMoid()
+	org_moid := getDefaultOrgMoid(config)
 	organizationRelationship := getOrganizationRelationship(org_moid)
 	vmediaPolicy.SetOrganization(organizationRelationship)
 
