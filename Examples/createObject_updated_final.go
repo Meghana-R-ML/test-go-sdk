@@ -59,14 +59,19 @@ func CreateObject(config *Config) {
 	apiClient := cfg.ApiClient
 	ctx := cfg.ctx
 
-	org_resp, _, org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
+	// Get Organization MOID
+	org_resp, r, org_err := apiClient.OrganizationApi.GetOrganizationOrganizationList(ctx).Filter("Name eq 'default'").Execute()
 	if org_err != nil {
 		log.Printf("Error: %v\n", err)
                 log.Printf("HTTP response: %v\n", r)
-                return	
+                return
 	}
-	org_moid := org_resp.GetMoid()
-	log.Printf("Organization moid: %v\n", org_moid)
+	org_list := org_resp.OrganizationOrganizationList.GetResults()
+	if len(org_list) == 0 {
+		log.Printf("Couldn't find the organization specified")
+                return
+	}
+	org_moid := org_list[0].MoBaseMo.GetMoid()
 	bootLocalCdd := createBootLocalCdd()
 	bootLocalDisk := createBootLocalDisk()
 	organizationRelationship := getOrganizationRelationship(org_moid)
