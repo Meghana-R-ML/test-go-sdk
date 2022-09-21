@@ -46,6 +46,9 @@ func ExecutePolicies(apiKey string, secret string, host string) {
 	ntpPolicyRelationship := getPolicyRelationship("ntp.Policy", config)
 	log.Printf("ntpPolicy response: %v\n", ntpPolicyRelationship)
 	
+	sdcardPolicyRelationship := getPolicyRelationship("sdcard.Policy", config)
+	log.Printf("sdcardPolicy response: %v\n", sdcardPolicyRelationship)
+	
 	smtpPolicyRelationship := getPolicyRelationship("smtp.Policy", config)
 	log.Printf("smtpPolicy response: %v\n", smtpPolicyRelationship)
 	
@@ -147,6 +150,8 @@ func getPolicyRelationship(policy string, config Config) *intersight.PolicyAbstr
 			policy_moid = CreateNetworkConfigPolicy(&config)
 		case "ntp.Policy":
 			policy_moid = CreateNtpPolicy(&config)
+		case "sdcard.Policy":
+			policy_moid = CreateSdCardPolicy(&config)
 		case "smtp.Policy":
 			policy_moid = CreateSmtpPolicy(&config)
 		case "snmp.Policy":

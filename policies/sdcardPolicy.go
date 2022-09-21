@@ -29,13 +29,13 @@ func CreateSdCardPolicy(config *Config) string {
 	apiClient := cfg.ApiClient
 	ctx := cfg.ctx
 	org_moid := getDefaultOrgMoid(config)
-        organizationRelationship := getOrganizationRelationship(org_moid)
+    organizationRelationship := getOrganizationRelationship(org_moid)
 	partition := setPartitions()
 	sdCardPolicy := intersight.NewSdcardPolicyWithDefaults()
 	sdCardPolicy.SetName("tf_sdcard_sdk")
 	sdCardPolicy.SetDescription("test policy")
 	sdCardPolicy.SetOrganization(organizationRelationship)
-        partitions := []intersight.SdcardPartition{*partition}
+    partitions := []intersight.SdcardPartition{*partition}
 	sdCardPolicy.SetPartitions(partitions)
 	resp, _, err := apiClient.SdcardApi.CreateSdcardPolicy(ctx).SdcardPolicy(*sdCardPolicy).Execute()
 	if err != nil {
