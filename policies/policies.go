@@ -100,6 +100,8 @@ func ExecutePolicies(apiKey string, secret string, host string) {
 	fcIfPolicyRelationship := getPolicyRelationship("vnic.FcIf", config)
 	log.Printf("fcIfPolicy response: %v\n", fcIfPolicyRelationship)
 	
+	policies := []intersight.PolicyAbstractPolicyRelationship{*adapterconfigPolicyRelationship, *deviceconnectorPolicyRelationship, *ldapPolicyRelationship, *ipmiPolicyRelationship, *kvmPolicyRelationship, *networkConfigPolicyRelationship, *ntpPolicyRelationship, *smtpPolicyRelationship, *snmpPolicyRelationship, *solPolicyRelationship, *syslogPolicyRelationship, *userPolicyRelationship, *storagePolicyRelationship, *storageDriveGroupRelationship, *vmediaPolicyRelationship, *ethAdapterPolicyRelationship, *ethNetworkPolicyRelationship, *ethQosPolicyRelationship, *lanPolicyRelationship, *ethIfPolicyRelationship, *fcAdapterPolicyRelationship, *fcNetworkPolicyRelationship, *fcQosPolicyRelationship, *sanPolicyRelationship, *fcIfPolicyRelationship}
+	CreateServerProfile(config,policies)
 }
 
 func getOrganizationRelationship(moid string) intersight.OrganizationOrganizationRelationship {
