@@ -101,7 +101,7 @@ func ExecutePolicies(apiKey string, secret string, host string) {
 	log.Printf("fcIfPolicy response: %v\n", fcIfPolicyRelationship)
 	
 	policies := []intersight.PolicyAbstractPolicyRelationship{*adapterconfigPolicyRelationship, *deviceconnectorPolicyRelationship, *ldapPolicyRelationship, *ipmiPolicyRelationship, *kvmPolicyRelationship, *networkConfigPolicyRelationship, *ntpPolicyRelationship, *smtpPolicyRelationship, *snmpPolicyRelationship, *solPolicyRelationship, *syslogPolicyRelationship, *userPolicyRelationship, *storagePolicyRelationship, *storageDriveGroupRelationship, *vmediaPolicyRelationship, *ethAdapterPolicyRelationship, *ethNetworkPolicyRelationship, *ethQosPolicyRelationship, *lanPolicyRelationship, *ethIfPolicyRelationship, *fcAdapterPolicyRelationship, *fcNetworkPolicyRelationship, *fcQosPolicyRelationship, *sanPolicyRelationship, *fcIfPolicyRelationship}
-	CreateServerProfile(config,policies)
+	CreateServerProfile(&config, policies)
 }
 
 func getOrganizationRelationship(moid string) intersight.OrganizationOrganizationRelationship {
@@ -191,5 +191,5 @@ func getPolicyRelationship(policy string, config Config) *intersight.PolicyAbstr
 	policy_object.SetObjectType(policy)
 	policy_object.SetMoid(policy_moid)
 	policyRelationship := intersight.PolicyAbstractPolicyAsPolicyAbstractPolicyRelationship(policy_object)
-	return policyRelationship
+	return *policyRelationship
 }
