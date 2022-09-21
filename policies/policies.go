@@ -130,7 +130,7 @@ func getDefaultOrgMoid(config *Config) string {
 	return org_moid
 }
 
-func getPolicyRelationship(policy string, config Config) intersight.PolicyAbstractPolicyRelationship {
+func getPolicyRelationship(policy string, config Config) *intersight.PolicyAbstractPolicyRelationship {
 	var policy_moid string
 	switch policy {
 		case "adapter.ConfigPolicy":
