@@ -22,5 +22,6 @@ func CreateServerProfile(config *Config,policies []intersight.PolicyAbstractPoli
 	if err != nil {
 		log.Fatalf("Error: %v\n", err)
 	}
+	log.Printf("Server profile created successfully")
 }
 
