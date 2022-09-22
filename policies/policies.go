@@ -103,7 +103,7 @@ func ExecutePolicies(apiKey string, secret string, host string) {
 	fcIfPolicyRelationship := getPolicyRelationship("vnic.FcIf", config)
 	log.Printf("fcIfPolicy response: %v\n", fcIfPolicyRelationship)
 	
-	policies := []intersight.PolicyAbstractPolicyRelationship{*adapterconfigPolicyRelationship, *deviceconnectorPolicyRelationship, *ldapPolicyRelationship, *ipmiPolicyRelationship, *kvmPolicyRelationship, *networkConfigPolicyRelationship, *ntpPolicyRelationship, *sdcardPolicyRelationship, *smtpPolicyRelationship, *snmpPolicyRelationship, *solPolicyRelationship, *syslogPolicyRelationship, *userPolicyRelationship, *vmediaPolicyRelationship, *ethAdapterPolicyRelationship, *ethNetworkPolicyRelationship, *ethQosPolicyRelationship, *lanPolicyRelationship, *fcAdapterPolicyRelationship, *fcNetworkPolicyRelationship, *fcQosPolicyRelationship, *sanPolicyRelationship}
+	policies := []intersight.PolicyAbstractPolicyRelationship{*adapterconfigPolicyRelationship, *deviceconnectorPolicyRelationship, *ldapPolicyRelationship, *ipmiPolicyRelationship, *kvmPolicyRelationship, *networkConfigPolicyRelationship, *ntpPolicyRelationship, *sdcardPolicyRelationship, *smtpPolicyRelationship, *snmpPolicyRelationship, *solPolicyRelationship, *syslogPolicyRelationship, *storagePolicyRelationship, *userPolicyRelationship, *vmediaPolicyRelationship, *ethAdapterPolicyRelationship, *ethNetworkPolicyRelationship, *ethQosPolicyRelationship, *lanPolicyRelationship, *fcAdapterPolicyRelationship, *fcNetworkPolicyRelationship, *fcQosPolicyRelationship, *sanPolicyRelationship}
 	CreateServerProfile(&config, policies)
 }
 

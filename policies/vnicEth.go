@@ -83,7 +83,7 @@ func CreateVnicEthAdapterPolicy(config *Config) string {
 	
 	completionQueueSettingsVal := intersight.NewVnicCompletionQueueSettingsWithDefaults()
 	completionQueueSettingsVal.SetRingSize(int64(1))
-	interruptSettingsVal.SetCount(int64(4))
+	completionQueueSettingsVal.SetCount(int64(4))
 	completionQueueSetting := intersight.NewNullableVnicCompletionQueueSettings(completionQueueSettingsVal)
 	completionQueueSettings := completionQueueSetting.Get()
 	ethadapterPolicy.SetCompletionQueueSettings(*completionQueueSettings)
