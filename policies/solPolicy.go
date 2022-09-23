@@ -29,4 +29,4 @@ func CreateSolPolicy(config *Config) string {
 	}
 	moid := resp.GetMoid()
 	return moid
-	}
+}
